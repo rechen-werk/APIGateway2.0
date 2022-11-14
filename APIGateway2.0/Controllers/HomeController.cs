@@ -14,8 +14,11 @@ namespace APIGateway2._0.Controllers
             return View();
         }
 
-        public ActionResult ShopAgents() =>
-            View();
+        public ActionResult ShopAgents()
+        {
+            ViewBag.Shops = shops;
+            return View();
+        }
 
         public ActionResult CaseStudy() =>
             View();
@@ -28,6 +31,19 @@ namespace APIGateway2._0.Controllers
             "Volksbank",
             "Sparkasse",
             "Oberbank"
+        };
+
+        private List<string> shops = new List<string>
+        {
+            "Hofer",
+            "Spar",
+            "Lidl",
+            "Billa",
+            "Rewe",
+            "Kaufland",
+            "Merkur",
+            "Penny",
+            "Norma"
         };
     }
 }
