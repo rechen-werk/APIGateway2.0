@@ -12,5 +12,8 @@ namespace APIGateway2._0.Controllers
 
         public ActionResult ShopAgents() =>
             View();
+
+        public ActionResult CaseStudy() =>
+            View();
     }
 }
