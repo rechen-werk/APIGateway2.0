@@ -1,2 +1,9 @@
 <h1>Banks</h1>
 
+
+<ul>
+    @foreach (var bank in @ViewBag.Banks)
+    {
+        <li>@bank</li>
+    }
+</ul>
