@@ -13,15 +13,13 @@ namespace APIGateway2._0.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult BankAgents()
         {
-            ViewBag.Message = "Your application description page.";
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult ShopAgents()
         {
-            ViewBag.Message = "Your contact page.";
             return View();
         }
     }
