@@ -1,52 +1,28 @@
-﻿using System.Collections.Generic;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using APIGateway2._0.Models;
 
 namespace APIGateway2._0.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly AgentHub hub = new AgentHub();
+        private readonly AgentHub _hub = new AgentHub();
 
         public ActionResult Index() =>
             View();
 
         public ActionResult BankAgents()
         {
-            ViewBag.Banks = banks;
+            ViewBag.Banks = _hub.Banks;
             return View();
         }
 
         public ActionResult ShopAgents()
         {
-            ViewBag.Shops = shops;
+            ViewBag.Shops = _hub.Shops;
             return View();
         }
 
         public ActionResult CaseStudy() =>
             View();
-
-        //---Temporary Lists to simulate Data that lukas will provide---------------------------------------------------
-
-        private List<string> banks = new List<string>
-        {
-            "Raiffeisenbank",
-            "Volksbank",
-            "Sparkasse",
-            "Oberbank"
-        };
-
-        private List<string> shops = new List<string>
-        {
-            "Hofer",
-            "Spar",
-            "Lidl",
-            "Billa",
-            "Rewe",
-            "Kaufland",
-            "Merkur",
-            "Penny",
-            "Norma"
-        };
     }
 }
