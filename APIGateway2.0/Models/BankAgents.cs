@@ -6,6 +6,7 @@ namespace Models
     public abstract class AbstractBank : IBankAgent{
         internal readonly Random Rand = new Random();
         public abstract Task<long> ConvertTo(long price, Currency from, Currency to);
+        public abstract string AsHtml();
     }
     
     internal class RaikaAgent : AbstractBank{
@@ -15,6 +16,9 @@ namespace Models
 
             return price;
         }
+
+        public override string AsHtml()
+            => nameof(RaikaAgent);
     }
     
     internal class VolksAgent : AbstractBank{
@@ -24,6 +28,9 @@ namespace Models
 
             return price;
         }
+
+        public override string AsHtml()
+            => nameof(VolksAgent);
     }
     
     internal class SparkaAgent : AbstractBank{
@@ -33,6 +40,9 @@ namespace Models
 
             return price;
         }
+
+        public override string AsHtml()
+            => nameof(SparAgent);
     }
     
     internal class OberAgent : AbstractBank{
@@ -42,5 +52,8 @@ namespace Models
 
             return price;
         }
+
+        public override string AsHtml()
+            => nameof(OberAgent);
     }
 }

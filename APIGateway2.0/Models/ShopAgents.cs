@@ -7,6 +7,7 @@ namespace Models
     internal abstract class AbstractShop : IShopAgent{
         internal readonly Random Rand = new Random();
         public abstract Task<List<(Item, int)>> GetItemsWithQuantity();
+        public abstract string AsHtml();
     }
     
     
@@ -19,6 +20,9 @@ namespace Models
 
             return new List<(Item, int)>();
         }
+
+        public override string AsHtml()
+            => nameof(HoferAgent);
     }
     
     internal class SparAgent : AbstractShop{
@@ -28,6 +32,9 @@ namespace Models
 
             return new List<(Item, int)>();
         }
+
+        public override string AsHtml()
+            => nameof(SparAgent);
     }
     
     internal class LidlAgent : AbstractShop{
@@ -37,6 +44,9 @@ namespace Models
 
             return new List<(Item, int)>();
         }
+
+        public override string AsHtml()
+            => nameof(LidlAgent);
     }
     
     internal class BillaAgent : AbstractShop{
@@ -46,6 +56,9 @@ namespace Models
 
             return new List<(Item, int)>();
         }
+
+        public override string AsHtml()
+            => nameof(BillaAgent);
     }
     
     internal class ReweAgent : AbstractShop{
@@ -55,6 +68,9 @@ namespace Models
 
             return new List<(Item, int)>();
         }
+
+        public override string AsHtml()
+            => nameof(ReweAgent);
     }
     
     internal class KauflandAgent : AbstractShop{
@@ -64,6 +80,9 @@ namespace Models
 
             return new List<(Item, int)>();
         }
+
+        public override string AsHtml()
+            => nameof(KauflandAgent);
     }
     
     internal class BillaPlusAgent : AbstractShop{
@@ -73,6 +92,9 @@ namespace Models
 
             return new List<(Item, int)>();
         }
+
+        public override string AsHtml()
+            => nameof(BillaPlusAgent);
     }
     
     internal class PennyAgent : AbstractShop{
@@ -82,6 +104,9 @@ namespace Models
 
             return new List<(Item, int)>();
         }
+
+        public override string AsHtml()
+            => nameof(PennyAgent);
     }
     
     internal class NormaAgent : AbstractShop{
@@ -91,5 +116,7 @@ namespace Models
 
             return new List<(Item, int)>();
         }
+        public override string AsHtml()
+            => nameof(NormaAgent);
     }
 }

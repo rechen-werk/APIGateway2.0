@@ -3,7 +3,10 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public interface IAgent{ }
+    public interface IAgent
+    {
+        string AsHtml();
+    }
     public interface IBankAgent : IAgent {
         Task<long> ConvertTo(long price, Currency from, Currency to);
     }
