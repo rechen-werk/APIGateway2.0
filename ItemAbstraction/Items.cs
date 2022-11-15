@@ -78,4 +78,9 @@ namespace ItemAbstraction
         Cookies
     }
 
+    public enum Currency
+    {
+        EUR, USD, JPY, GBP, AUD, CAD, CHF
+    }
+
 }
