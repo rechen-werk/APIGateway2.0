@@ -2,8 +2,12 @@
 
 namespace AgentAbstraction
 {
-    public interface IAgent
+    public interface IBankAgent
     {
-        List<Item> getItems();
+        int convertTo(int price, Currency from, Currency to);
+    }
+    public interface IShopAgent
+    {
+        List<(Item, int)> getItemsWithQuantity();
     }
 }
