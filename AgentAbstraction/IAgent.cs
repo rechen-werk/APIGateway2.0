@@ -4,10 +4,10 @@ namespace AgentAbstraction
 {
     public interface IBankAgent
     {
-        int convertTo(int price, Currency from, Currency to);
+        long ConvertTo(long price, Currency from, Currency to);
     }
     public interface IShopAgent
     {
-        List<(Item, int)> getItemsWithQuantity();
+        List<(Item, int)> GetItemsWithQuantity();
     }
 }

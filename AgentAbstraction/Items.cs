@@ -2,7 +2,7 @@ namespace AgentAbstraction
 {
     public sealed class Item
     {
-        public int Price { get; }
+        public long Price { get; }
         public Currency Currency { get; }
         public ItemType Type { get; }
 
