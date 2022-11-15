@@ -1,5 +1,5 @@
 ﻿using System.Web.Mvc;
-using APIGateway2._0.Models;
+using Agent;
 
 namespace APIGateway2._0.Controllers
 {

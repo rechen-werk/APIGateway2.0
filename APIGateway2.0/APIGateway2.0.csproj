@@ -135,6 +135,10 @@
             <DependentUpon>Global.asax</DependentUpon>
         </Compile>
         <Compile Include="Models\AgentHub.cs" />
+        <Compile Include="Models\BankAgents.cs" />
+        <Compile Include="Models\IAgent.cs" />
+        <Compile Include="Models\Items.cs" />
+        <Compile Include="Models\ShopAgents.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>
@@ -190,12 +194,6 @@
         <None Include="packages.config" />
         <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
         <Content Include="Scripts\jquery-3.3.1.min.map" />
-    </ItemGroup>
-    <ItemGroup>
-      <ProjectReference Include="..\AgentAbstraction\AgentAbstraction.csproj">
-        <Project>{827f4d39-b383-4bda-abff-b6f58d379ca9}</Project>
-        <Name>AgentAbstraction</Name>
-      </ProjectReference>
     </ItemGroup>
     <PropertyGroup>
         <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

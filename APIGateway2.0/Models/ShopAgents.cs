@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AgentAbstraction;
 
-namespace Agent
+namespace Models
 {
     internal abstract class AbstractShop : IShopAgent{
         internal readonly Random Rand = new Random();

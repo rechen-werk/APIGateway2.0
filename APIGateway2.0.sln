@@ -2,10 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIGateway2.0", "APIGateway2.0\APIGateway2.0.csproj", "{C56C4FB4-AC92-458D-A74A-18CF3304A0B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Agent", "Agent\Agent.csproj", "{09649D90-53D5-451B-AF34-E64E04FD558A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgentAbstraction", "AgentAbstraction\AgentAbstraction.csproj", "{827F4D39-B383-4BDA-ABFF-B6F58D379CA9}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -16,13 +12,5 @@ Global
 		{C56C4FB4-AC92-458D-A74A-18CF3304A0B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C56C4FB4-AC92-458D-A74A-18CF3304A0B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C56C4FB4-AC92-458D-A74A-18CF3304A0B9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{09649D90-53D5-451B-AF34-E64E04FD558A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{09649D90-53D5-451B-AF34-E64E04FD558A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{09649D90-53D5-451B-AF34-E64E04FD558A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{09649D90-53D5-451B-AF34-E64E04FD558A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{827F4D39-B383-4BDA-ABFF-B6F58D379CA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{827F4D39-B383-4BDA-ABFF-B6F58D379CA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{827F4D39-B383-4BDA-ABFF-B6F58D379CA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{827F4D39-B383-4BDA-ABFF-B6F58D379CA9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -1,10 +1,9 @@
 using System;
 using System.Threading.Tasks;
-using AgentAbstraction;
 
-namespace Agent
+namespace Models
 {
-    internal abstract class AbstractBank : IBankAgent{ 
+    public abstract class AbstractBank : IBankAgent{
         internal readonly Random Rand = new Random();
         public abstract Task<long> ConvertTo(long price, Currency from, Currency to);
     }
