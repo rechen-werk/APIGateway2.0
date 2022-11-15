@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
-using AgentAbstraction;
+using APIGateway2._0.Models;
 
 namespace APIGateway2._0.Controllers
 {
     public class HomeController : Controller
     {
-        private List<IAgent> _registeredAgents = new List<IAgent>();
+        private readonly AgentHub hub = new AgentHub();
 
         public ActionResult Index() =>
             View();

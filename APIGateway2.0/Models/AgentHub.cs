@@ -5,8 +5,8 @@ namespace APIGateway2._0.Models
 {
     internal class AgentHub
     {
-        private List<IShopAgent> _shopAgentList = new List<IShopAgent>();
-        private List<IBankAgent> _bankAgentList = new List<IBankAgent>();
+        private readonly List<IShopAgent> _shopAgentList = new List<IShopAgent>();
+        private readonly List<IBankAgent> _bankAgentList = new List<IBankAgent>();
 
         public IList<IShopAgent> Shops =>
             _shopAgentList.AsReadOnly();
