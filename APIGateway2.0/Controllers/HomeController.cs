@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
+using AgentAbstraction;
 
 namespace APIGateway2._0.Controllers
 {
     public class HomeController : Controller
     {
+        private List<IAgent> _registeredAgents = new List<IAgent>();
+
         public ActionResult Index() =>
             View();
 

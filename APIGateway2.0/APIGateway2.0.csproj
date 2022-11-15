@@ -177,6 +177,12 @@
         <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
         <Content Include="Scripts\jquery-3.3.1.min.map" />
     </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\AgentAbstraction\AgentAbstraction.csproj">
+        <Project>{827f4d39-b383-4bda-abff-b6f58d379ca9}</Project>
+        <Name>AgentAbstraction</Name>
+      </ProjectReference>
+    </ItemGroup>
     <PropertyGroup>
         <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
         <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
