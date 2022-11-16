@@ -47,10 +47,11 @@ namespace Agent
 
         private void pseudoInit()
         {
-            _bankAgentList.Add(new OberAgent());
-            _bankAgentList.Add(new SparkaAgent());
-            _bankAgentList.Add(new RaikaAgent());
-            _bankAgentList.Add(new VolksAgent());
+            _bankAgentList.Add(new CheapBank());
+            _bankAgentList.Add(new ExpensiveBank());
+            _bankAgentList.Add(new VeryExpensiveBank());
+            _bankAgentList.Add(new QuiteExpensiveBank());
+            _bankAgentList.Add(new FairBank());
 
             _shopAgentList.Add(new BillaAgent());
             _shopAgentList.Add(new HoferAgent());

@@ -18,51 +18,63 @@ namespace Models
         public abstract string AsHtml();
     }
     
-    internal class RaikaAgent : AbstractBank{
+    internal class VeryExpensiveBank : AbstractBank{
         public override async Task<long> ConvertTo(long price, Currency from, Currency to)
         {
             await Task.Delay(TimeSpan.FromSeconds(Rand.Next()));
 
-            return price;
+            return (long) (price * 1.5 * conversionTable[(int)from, (int)to]);
         }
 
         public override string AsHtml()
-            => nameof(RaikaAgent);
+            => nameof(VeryExpensiveBank);
     }
     
-    internal class VolksAgent : AbstractBank{
+    internal class QuiteExpensiveBank : AbstractBank{
         public override async Task<long> ConvertTo(long price, Currency from, Currency to)
         {
             await Task.Delay(TimeSpan.FromSeconds(Rand.Next()));
 
-            return price;
+            return (long) (price * 1.3 * conversionTable[(int)from, (int)to]);
         }
 
         public override string AsHtml()
-            => nameof(VolksAgent);
+            => nameof(QuiteExpensiveBank);
     }
     
-    internal class SparkaAgent : AbstractBank{
+    internal class ExpensiveBank : AbstractBank{
         public override async Task<long> ConvertTo(long price, Currency from, Currency to)
         {
             await Task.Delay(TimeSpan.FromSeconds(Rand.Next()));
 
-            return price;
+            return (long) (price * 1.1 * conversionTable[(int)from, (int)to]);
         }
 
         public override string AsHtml()
-            => nameof(SparAgent);
+            => nameof(ExpensiveBank);
     }
     
-    internal class OberAgent : AbstractBank{
+    internal class CheapBank : AbstractBank{
         public override async Task<long> ConvertTo(long price, Currency from, Currency to)
         {
             await Task.Delay(TimeSpan.FromSeconds(Rand.Next()));
 
-            return price;
+            return (long) (price * 1.05 * conversionTable[(int)from, (int)to]);
         }
 
         public override string AsHtml()
-            => nameof(OberAgent);
+            => nameof(CheapBank);
+    }
+    
+    internal class FairBank : AbstractBank{
+        public override async Task<long> ConvertTo(long price, Currency from, Currency to)
+        {
+            await Task.Delay(TimeSpan.FromSeconds(Rand.Next()));
+
+            return (long) (price * conversionTable[(int)from, (int)to]);
+        }
+
+        public override string AsHtml()
+            => nameof(CheapBank);
     }
 }
