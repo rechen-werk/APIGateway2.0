@@ -55,6 +55,10 @@ namespace Models
     }
     
     internal class CheapBank : AbstractBank{
+        public CheapBank()
+        {
+            
+        }
         public override async Task<long> ConvertTo(long price, Currency from, Currency to)
         {
             await Task.Delay(TimeSpan.FromSeconds(Rand.Next(0,30)));

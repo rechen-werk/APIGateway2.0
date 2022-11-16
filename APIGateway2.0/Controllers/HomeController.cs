@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using Agent;
+using Models;
 
 namespace APIGateway2._0.Controllers
 {
@@ -13,7 +14,7 @@ namespace APIGateway2._0.Controllers
 
         public ActionResult BankAgents()
         {
-            ViewBag.Banks = _hub.Banks.Select(it => it.AsHtml());
+            ViewData["banks"] = _hub.Banks;
             return View();
         }
 
@@ -25,5 +26,19 @@ namespace APIGateway2._0.Controllers
 
         public ActionResult CaseStudy() =>
             View();
+
+        public ActionResult BankVisualizer(IBankAgent bankAgent)
+        {
+            switch (bankAgent)
+            {
+                case VeryExpensiveBank agent: return View(agent);
+                case ExpensiveBank agent: return View(agent);
+                case FairBank agent: return View(agent);
+                case UnresponsiveBank agent: return View(agent);
+                case CheapBank agent: return View(agent);
+                case QuiteExpensiveBank agent: return View(agent);
+                default: return View(bankAgent);
+            }
+        }
     }
 }

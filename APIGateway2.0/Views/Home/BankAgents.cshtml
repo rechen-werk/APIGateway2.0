@@ -1,9 +1,10 @@
+@using Models
 <h1>Banks</h1>
 
-
 <ul>
-    @foreach (var bank in ViewBag.Banks)
+    @foreach (var bank in (IList<IBankAgent>)ViewData["banks"])
     {
-        <li>@bank</li>
+        <li>  @Html.ActionLink(@bank.AsHtml(), "BankVisualizer", "Home")</li>
     }
+    
 </ul>
