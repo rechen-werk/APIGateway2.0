@@ -21,7 +21,7 @@ namespace Models
     internal class VeryExpensiveBank : AbstractBank{
         public override async Task<long> ConvertTo(long price, Currency from, Currency to)
         {
-            await Task.Delay(TimeSpan.FromSeconds(Rand.Next()));
+            await Task.Delay(TimeSpan.FromSeconds(Rand.Next(0,30)));
 
             return (long) (price * 1.5 * conversionTable[(int)from, (int)to]);
         }
@@ -33,7 +33,7 @@ namespace Models
     internal class QuiteExpensiveBank : AbstractBank{
         public override async Task<long> ConvertTo(long price, Currency from, Currency to)
         {
-            await Task.Delay(TimeSpan.FromSeconds(Rand.Next()));
+            await Task.Delay(TimeSpan.FromSeconds(Rand.Next(0,30)));
 
             return (long) (price * 1.3 * conversionTable[(int)from, (int)to]);
         }
@@ -45,7 +45,7 @@ namespace Models
     internal class ExpensiveBank : AbstractBank{
         public override async Task<long> ConvertTo(long price, Currency from, Currency to)
         {
-            await Task.Delay(TimeSpan.FromSeconds(Rand.Next()));
+            await Task.Delay(TimeSpan.FromSeconds(Rand.Next(0,30)));
 
             return (long) (price * 1.1 * conversionTable[(int)from, (int)to]);
         }
@@ -57,7 +57,7 @@ namespace Models
     internal class CheapBank : AbstractBank{
         public override async Task<long> ConvertTo(long price, Currency from, Currency to)
         {
-            await Task.Delay(TimeSpan.FromSeconds(Rand.Next()));
+            await Task.Delay(TimeSpan.FromSeconds(Rand.Next(0,30)));
 
             return (long) (price * 1.05 * conversionTable[(int)from, (int)to]);
         }
@@ -69,7 +69,7 @@ namespace Models
     internal class FairBank : AbstractBank{
         public override async Task<long> ConvertTo(long price, Currency from, Currency to)
         {
-            await Task.Delay(TimeSpan.FromSeconds(Rand.Next()));
+            await Task.Delay(TimeSpan.FromSeconds(Rand.Next(0,30)));
 
             return (long) (price * conversionTable[(int)from, (int)to]);
         }
