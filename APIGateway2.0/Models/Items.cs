@@ -14,7 +14,7 @@ namespace Models
         }
     }
 
-    public enum ItemType
+    public enum  ItemType
     {
         Apple, Banana, Pear, Grapes, Avocado, Pineapple, Grapefruit, Watermelon, Orange, Coconut, Kiwi, Mango, Corn,
         Mushroom, Broccoli, Cucumber, Pepper, Carrot, Tomato, Cabbage, Potato, Lettuce, Onion, Radish, Spinach, Peas,

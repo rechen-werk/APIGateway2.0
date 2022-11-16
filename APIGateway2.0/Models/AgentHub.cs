@@ -16,7 +16,7 @@ namespace Agent
 
         public AgentHub()
         {
-            pseudoInit();
+            PseudoInit();
         }
 
         public void RegisterAgent(IAgent agent)
@@ -45,7 +45,7 @@ namespace Agent
             }
         }
 
-        private void pseudoInit()
+        private void PseudoInit()
         {
             _bankAgentList.Add(new CheapBank());
             _bankAgentList.Add(new ExpensiveBank());
