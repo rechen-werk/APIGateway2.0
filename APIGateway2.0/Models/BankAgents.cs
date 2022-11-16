@@ -75,6 +75,18 @@ namespace Models
         }
 
         public override string AsHtml()
-            => nameof(CheapBank);
+            => nameof(FairBank);
+    }
+    
+    internal class UnresponsiveBank : AbstractBank{
+        public override async Task<long> ConvertTo(long price, Currency from, Currency to)
+        {
+            await Task.Delay(TimeSpan.MaxValue);
+
+            return (long) (price * conversionTable[(int)from, (int)to]);
+        }
+
+        public override string AsHtml()
+            => nameof(UnresponsiveBank);
     }
 }

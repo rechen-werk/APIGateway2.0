@@ -52,6 +52,7 @@ namespace Agent
             _bankAgentList.Add(new VeryExpensiveBank());
             _bankAgentList.Add(new QuiteExpensiveBank());
             _bankAgentList.Add(new FairBank());
+            _bankAgentList.Add(new UnresponsiveBank());
 
             _shopAgentList.Add(new BillaAgent());
             _shopAgentList.Add(new HoferAgent());
