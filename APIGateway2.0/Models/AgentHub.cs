@@ -65,8 +65,8 @@ namespace APIGateway2._0.Models
                 async (price, from, to)
                     =>
                 {
-                    await Task.Delay(TimeSpan.FromSeconds(BankAgent.Rand.Next(0,30)));
-                    return (long)(price * 1.5 * BankAgent.Table(from, to));
+                    //await Task.Delay(TimeSpan.FromSeconds(BankAgent.Rand.Next(0,30)));
+                    return (long)(price * 0.5 * BankAgent.Table(from, to));
                 })
             );
             RegisterAgent(
@@ -76,8 +76,8 @@ namespace APIGateway2._0.Models
                 async (price, from, to)
                     =>
                 {
-                    await Task.Delay(TimeSpan.FromSeconds(BankAgent.Rand.Next(0,30)));
-                    return (long)(price * 1.3 * BankAgent.Table(from, to));
+                    //await Task.Delay(TimeSpan.FromSeconds(BankAgent.Rand.Next(0,30)));
+                    return (long)(price * 0.7 * BankAgent.Table(from, to));
                 })
             );
             RegisterAgent(
@@ -87,8 +87,8 @@ namespace APIGateway2._0.Models
                 async (price, from, to)
                     =>
                 {
-                    await Task.Delay(TimeSpan.FromSeconds(BankAgent.Rand.Next(0,30)));
-                    return (long)(price * 1.1 * BankAgent.Table(from, to));
+                    //await Task.Delay(TimeSpan.FromSeconds(BankAgent.Rand.Next(0,30)));
+                    return (long)(price * 0.9 * BankAgent.Table(from, to));
                 })
             );
             RegisterAgent(
@@ -98,8 +98,8 @@ namespace APIGateway2._0.Models
                 async (price, from, to)
                     =>
                 {
-                    await Task.Delay(TimeSpan.FromSeconds(BankAgent.Rand.Next(0,30)));
-                    return (long)(price * 1.05 * BankAgent.Table(from, to));
+                    //await Task.Delay(TimeSpan.FromSeconds(BankAgent.Rand.Next(0,30)));
+                    return (long)(price * 0.95 * BankAgent.Table(from, to));
                 })
             );
             RegisterAgent(
@@ -109,7 +109,7 @@ namespace APIGateway2._0.Models
                 async (price, from, to)
                     =>
                 {
-                    await Task.Delay(TimeSpan.FromSeconds(BankAgent.Rand.Next(0,30)));
+                    //await Task.Delay(TimeSpan.FromSeconds(BankAgent.Rand.Next(0,30)));
                     return (long)(price * BankAgent.Table(from, to));
                 })
             );
