@@ -28,12 +28,12 @@ namespace APIGateway2._0.Controllers
 
         public ActionResult BankVisualizer(BankAgent bank)
         {
-            return View(bank);
+            return View((BankAgent)_hub.GetAgent(bank.Name));
         }
 
-        public ActionResult ShopVisualizer(ShopAgent shopAgent)
+        public ActionResult ShopVisualizer(ShopAgent shop)
         {
-            return View(shopAgent);
+            return View((ShopAgent)_hub.GetAgent(shop.Name));
         }
     }
 }
