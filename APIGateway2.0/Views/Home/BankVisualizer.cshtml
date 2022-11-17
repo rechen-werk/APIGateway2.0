@@ -20,7 +20,7 @@
                     var current = Model.Convert(100, (Currency)from, (Currency)to).Result;
                     var full = current / 100;
                     var cent = current % 100;
-                    <td> @(full).@cent </td>
+                    <td> @(full).@String.Format("{0,2:00}", cent) </td>
                 }
             }
         </tr>
