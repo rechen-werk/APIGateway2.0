@@ -134,11 +134,11 @@
         <Compile Include="Global.asax.cs">
             <DependentUpon>Global.asax</DependentUpon>
         </Compile>
+        <Compile Include="Models\Agent.cs" />
         <Compile Include="Models\AgentHub.cs" />
-        <Compile Include="Models\BankAgents.cs" />
-        <Compile Include="Models\IAgent.cs" />
+        <Compile Include="Models\BankAgent.cs" />
         <Compile Include="Models\Items.cs" />
-        <Compile Include="Models\ShopAgents.cs" />
+        <Compile Include="Models\ShopAgent.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>
@@ -164,8 +164,10 @@
         <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
         <Content Include="Scripts\modernizr-2.8.3.js" />
         <Content Include="Views\Home\BankAgents.cshtml" />
+        <Content Include="Views\Home\BankVisualizer.cshtml" />
         <Content Include="Views\Home\CaseStudy.cshtml" />
         <Content Include="Views\Home\ShopAgents.cshtml" />
+        <Content Include="Views\Home\ShopVisualizer.cshtml" />
         <Content Include="Web.config" />
         <Content Include="Web.Debug.config">
             <DependentUpon>Web.config</DependentUpon>
