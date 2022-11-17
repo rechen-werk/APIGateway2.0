@@ -1,23 +1,34 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+
 using System.Threading.Tasks;
 
 namespace APIGateway2._0.Models
 {
     internal class AgentHub
     {
-        private readonly List<ShopAgent> _shopAgentList = new List<ShopAgent>();
-        private readonly List<BankAgent> _bankAgentList = new List<BankAgent>();
+        private readonly Dictionary<string, ShopAgent> _shopAgentList = new Dictionary<string, ShopAgent>();
+        private readonly Dictionary<string, BankAgent> _bankAgentList = new Dictionary<string, BankAgent>();
 
         public IList<ShopAgent> Shops =>
-            _shopAgentList.AsReadOnly();
+            _shopAgentList.Values.ToList().AsReadOnly();
 
         public IList<BankAgent> Banks =>
-            _bankAgentList.AsReadOnly();
+            _bankAgentList.Values.ToList().AsReadOnly();
 
         public AgentHub()
         {
             PseudoInit();
+        }
+
+        public Agent GetAgent(string name)
+        {
+            if (_bankAgentList.ContainsKey(name))
+            {
+                return _bankAgentList[name];
+            }
+            return _shopAgentList.ContainsKey(name) ? _shopAgentList[name] : null;
         }
 
         public void RegisterAgent(Agent agent)
@@ -25,10 +36,11 @@ namespace APIGateway2._0.Models
             switch (agent)
             {
                case BankAgent bankAgent:
-                   _bankAgentList.Add(bankAgent);
+                   _bankAgentList.Add(agent.Name, bankAgent);
                    break;
                case ShopAgent shopAgent:
-                   _shopAgentList.Add(shopAgent);
+                   _shopAgentList.Add(agent.Name, shopAgent);
+
                    break;
             }
         }
@@ -38,72 +50,74 @@ namespace APIGateway2._0.Models
             switch (agent)
             {
                 case BankAgent bankAgent:
-                    _bankAgentList.Remove(bankAgent);
+                    _bankAgentList.Remove(bankAgent.Name);
                     break;
                 case ShopAgent shopAgent:
-                    _shopAgentList.Remove(shopAgent);
+                    _shopAgentList.Remove(shopAgent.Name);
                     break;
             }
         }
 
         private void PseudoInit()
         {
-            _bankAgentList.Add(
+            RegisterAgent(
                 new BankAgent(
                 "VeryExpensiveBank",
                 "Takes 50% of your money.",
                 async (price, from, to)
                     =>
                 {
-                    await Task.Delay(TimeSpan.FromSeconds(BankAgent.Rand.Next(0,30)));
-                    return (long)(price * 1.5 * BankAgent.Table(from, to));
+                    //await Task.Delay(TimeSpan.FromSeconds(BankAgent.Rand.Next(0,30)));
+                    return (long)(price * 0.5 * BankAgent.Table(from, to));
                 })
             );
-            _bankAgentList.Add(
+            
+            RegisterAgent(
                 new BankAgent(
                 "QuiteExpensiveBank",
                 "Takes 30% of your money.",
                 async (price, from, to)
                     =>
                 {
-                    await Task.Delay(TimeSpan.FromSeconds(BankAgent.Rand.Next(0,30)));
-                    return (long)(price * 1.3 * BankAgent.Table(from, to));
+                    //await Task.Delay(TimeSpan.FromSeconds(BankAgent.Rand.Next(0,30)));
+                    return (long)(price * 0.7 * BankAgent.Table(from, to));
                 })
             );
-            _bankAgentList.Add(
+            RegisterAgent(
+
                 new BankAgent(
                 "ExpensiveBank",
                 "Takes 10% of your money.",
                 async (price, from, to)
                     =>
                 {
-                    await Task.Delay(TimeSpan.FromSeconds(BankAgent.Rand.Next(0,30)));
-                    return (long)(price * 1.1 * BankAgent.Table(from, to));
+                    //await Task.Delay(TimeSpan.FromSeconds(BankAgent.Rand.Next(0,30)));
+                    return (long)(price * 0.9 * BankAgent.Table(from, to));
                 })
             );
-            _bankAgentList.Add(
+            RegisterAgent(
                 new BankAgent(
                 "CheapBank",
                 "Takes 5% of your money.",
                 async (price, from, to)
                     =>
                 {
-                    await Task.Delay(TimeSpan.FromSeconds(BankAgent.Rand.Next(0,30)));
-                    return (long)(price * 1.05 * BankAgent.Table(from, to));
+                    //await Task.Delay(TimeSpan.FromSeconds(BankAgent.Rand.Next(0,30)));
+                    return (long)(price * 0.95 * BankAgent.Table(from, to));
                 })
             );
-            _bankAgentList.Add(
+            RegisterAgent(
                 new BankAgent(
                 "FairBank",
                 "Takes none of your money.",
                 async (price, from, to)
                     =>
                 {
-                    await Task.Delay(TimeSpan.FromSeconds(BankAgent.Rand.Next(0,30)));
+                    //await Task.Delay(TimeSpan.FromSeconds(BankAgent.Rand.Next(0,30)));
                     return (long)(price * BankAgent.Table(from, to));
                 })
             );
-            _bankAgentList.Add(
+            RegisterAgent(
                 new BankAgent(
                 "UnresponsiveBank",
                 "Never responds to requests.",
@@ -115,7 +129,8 @@ namespace APIGateway2._0.Models
                 })
             );
 
-            _shopAgentList.Add(
+
+            RegisterAgent(
                 new ShopAgent(
                     "HoferAgent",
                     "Sells a few items.",
@@ -124,7 +139,8 @@ namespace APIGateway2._0.Models
                     new Item(ItemType.Bacon, 3, Currency.USD)
                 )
             );
-            _shopAgentList.Add(
+
+            RegisterAgent(
                 new ShopAgent(
                     "SparAgent",
                     "Sells a few items.",
@@ -134,7 +150,8 @@ namespace APIGateway2._0.Models
                     new Item(ItemType.Apple, 3, Currency.EUR)
                 )
             );
-            _shopAgentList.Add(
+
+            RegisterAgent(
                 new ShopAgent(
                     "LidlAgent",
                     "Sells a few items.",
@@ -144,7 +161,8 @@ namespace APIGateway2._0.Models
                     new Item(ItemType.Avocado, 3, Currency.JPY)
                 )
             );
-            _shopAgentList.Add(
+
+            RegisterAgent(
                 new ShopAgent(
                     "BillaAgent",
                     "Sells a few items.",
@@ -154,7 +172,8 @@ namespace APIGateway2._0.Models
                     new Item(ItemType.Cookies, 3, Currency.JPY)
                 )
             );
-            _shopAgentList.Add(
+
+            RegisterAgent(
                 new ShopAgent(
                     "ReweAgent",
                     "Sells a few items.",
@@ -166,7 +185,7 @@ namespace APIGateway2._0.Models
                     new Item(ItemType.Pear, 1, Currency.JPY)
                 )
             );
-            _shopAgentList.Add(
+            RegisterAgent(
                 new ShopAgent(
                     "KauflandAgent",
                     "Sells a few items.",
@@ -176,7 +195,7 @@ namespace APIGateway2._0.Models
                     new Item(ItemType.Ginger, 1, Currency.JPY)
                 )
             );
-            _shopAgentList.Add(
+            RegisterAgent(
                 new ShopAgent(
                     "BillaPlusAgent",
                     "Sells a few items.",
@@ -189,7 +208,7 @@ namespace APIGateway2._0.Models
                     new Item(ItemType.Mayonnaise, 3, Currency.JPY)
                 )
             );
-            _shopAgentList.Add(
+            RegisterAgent(
                 new ShopAgent(
                     "PennyAgent",
                     "Sells a few items.",
@@ -197,7 +216,7 @@ namespace APIGateway2._0.Models
                     new Item(ItemType.Mayonnaise, 6, Currency.JPY)
                 )
             );
-            _shopAgentList.Add(
+            RegisterAgent(
                 new ShopAgent(
                     "NormaAgent",
                     "Sells a few items.",
