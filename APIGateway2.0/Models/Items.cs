@@ -1,4 +1,4 @@
-namespace Models
+namespace APIGateway2._0.Models
 {
     public sealed class Item
     {

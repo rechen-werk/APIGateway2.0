@@ -1,10 +1,10 @@
-@using Models
+@using APIGateway2._0.Models
 <h1>Banks</h1>
 
 <ul>
-    @foreach (var bank in (IList<IBankAgent>)ViewData["banks"])
+    @foreach (var bank in (IList<BankAgent>)ViewData["banks"])
     {
-        <li>  @Html.ActionLink(@bank.AsHtml(), "BankVisualizer", "Home")</li>
+        <li>  @Html.ActionLink(bank.Name, "BankVisualizer", "Home", bank, null)</li>
     }
     
 </ul>

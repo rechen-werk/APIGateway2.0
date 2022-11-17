@@ -1,8 +1,9 @@
+@using APIGateway2._0.Models
 <h1>Agents</h1>
 
 <ul>
-    @foreach (var shop in ViewBag.Shops)
-    {
-        <li>@shop</li>
-    }
+    @foreach (var shop in (IList<ShopAgent>)ViewData["shops"])
+        {
+            <li>  @Html.ActionLink(shop.Name, "ShopVisualizer", "Home", shop, null)</li>
+        }
 </ul>

@@ -1,0 +1,11 @@
+@model APIGateway2._0.Models.ShopAgent
+
+<h2>@Model.Name</h2>
+<p>@Model.Description</p>
+<ul>
+    @foreach (var item in Model.GetItemsWithQuantity().GetAwaiter().GetResult())
+    {
+        <li>@item.Item1.Type.ToString(): @item.Item2</li>
+    }
+
+</ul>

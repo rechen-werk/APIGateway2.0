@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
-using Agent;
-using Models;
+using APIGateway2._0.Models;
 
 namespace APIGateway2._0.Controllers
 {
@@ -20,25 +19,21 @@ namespace APIGateway2._0.Controllers
 
         public ActionResult ShopAgents()
         {
-            ViewBag.Shops = _hub.Shops.Select(it => it.AsHtml());
+            ViewData["shops"] = _hub.Shops;
             return View();
         }
 
         public ActionResult CaseStudy() =>
             View();
 
-        public ActionResult BankVisualizer(IBankAgent bankAgent)
+        public ActionResult BankVisualizer(BankAgent bank)
         {
-            switch (bankAgent)
-            {
-                case VeryExpensiveBank agent: return View(agent);
-                case ExpensiveBank agent: return View(agent);
-                case FairBank agent: return View(agent);
-                case UnresponsiveBank agent: return View(agent);
-                case CheapBank agent: return View(agent);
-                case QuiteExpensiveBank agent: return View(agent);
-                default: return View(bankAgent);
-            }
+            return View(bank);
+        }
+
+        public ActionResult ShopVisualizer(ShopAgent shopAgent)
+        {
+            return View(shopAgent);
         }
     }
 }
