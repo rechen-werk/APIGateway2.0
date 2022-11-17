@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using System.Threading.Tasks;
 
 namespace APIGateway2._0.Models
@@ -39,6 +40,7 @@ namespace APIGateway2._0.Models
                    break;
                case ShopAgent shopAgent:
                    _shopAgentList.Add(agent.Name, shopAgent);
+
                    break;
             }
         }
@@ -69,6 +71,7 @@ namespace APIGateway2._0.Models
                     return (long)(price * 0.5 * BankAgent.Table(from, to));
                 })
             );
+            
             RegisterAgent(
                 new BankAgent(
                 "QuiteExpensiveBank",
@@ -81,6 +84,7 @@ namespace APIGateway2._0.Models
                 })
             );
             RegisterAgent(
+
                 new BankAgent(
                 "ExpensiveBank",
                 "Takes 10% of your money.",
@@ -125,6 +129,7 @@ namespace APIGateway2._0.Models
                 })
             );
 
+
             RegisterAgent(
                 new ShopAgent(
                     "HoferAgent",
@@ -134,6 +139,7 @@ namespace APIGateway2._0.Models
                     new Item(ItemType.Bacon, 3, Currency.USD)
                 )
             );
+
             RegisterAgent(
                 new ShopAgent(
                     "SparAgent",
@@ -144,6 +150,7 @@ namespace APIGateway2._0.Models
                     new Item(ItemType.Apple, 3, Currency.EUR)
                 )
             );
+
             RegisterAgent(
                 new ShopAgent(
                     "LidlAgent",
@@ -154,6 +161,7 @@ namespace APIGateway2._0.Models
                     new Item(ItemType.Avocado, 3, Currency.JPY)
                 )
             );
+
             RegisterAgent(
                 new ShopAgent(
                     "BillaAgent",
@@ -164,6 +172,7 @@ namespace APIGateway2._0.Models
                     new Item(ItemType.Cookies, 3, Currency.JPY)
                 )
             );
+
             RegisterAgent(
                 new ShopAgent(
                     "ReweAgent",
