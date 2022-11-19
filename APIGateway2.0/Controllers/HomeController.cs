@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System.Threading.Tasks;
 using System.Web.Mvc;
 using APIGateway2._0.Models;
 
@@ -8,28 +8,28 @@ namespace APIGateway2._0.Controllers
     {
         private readonly AgentHub _hub = new AgentHub();
 
-        public ActionResult Index() =>
+        public async Task<ActionResult> Index() =>
             View();
 
-        public ActionResult BankAgents()
+        public async Task<ActionResult> BankAgents()
         {
             ViewData["banks"] = _hub.Banks;
             return View();
         }
 
-        public ActionResult ShopAgents()
+        public async Task<ActionResult> ShopAgents()
         {
             ViewData["shops"] = _hub.Shops;
             return View();
         }
 
-        public ActionResult CaseStudy() =>
+        public async Task<ActionResult> CaseStudy() =>
             View();
 
-        public ActionResult BankVisualizer(string bank) =>
+        public async Task<ActionResult> BankVisualizer(string bank) =>
             View((BankAgent)_hub.GetAgent(bank));
 
-        public ActionResult ShopVisualizer(string shop) =>
+        public async Task<ActionResult> ShopVisualizer(string shop) =>
             View((ShopAgent)_hub.GetAgent(shop));
     }
 }
