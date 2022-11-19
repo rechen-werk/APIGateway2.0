@@ -32,10 +32,10 @@
 	@RenderBody()
 </div>
 <footer>
-	<hr/>
-	<div class="container body-content">
-		<p>SE in Softwareengineering - Group 2 - C#</p>
-    </div>
+	<div>
+		<hr style="margin-top:0"/>
+		<p style="padding-left: 75px">SE in Softwareengineering - Group 2 - C#</p>
+	</div>
 </footer>
 
 @Scripts.Render("~/bundles/jquery")
@@ -49,9 +49,11 @@
 		color: #b7b7b7;
 	}
 	footer {
-	  position: absolute;
 	  bottom: 0;
 	  width: 100%;
+      position: fixed;
+      background: #161718;
+      border-width: 0px;
 	}
     .tilesWrap {
 		list-style: none;
