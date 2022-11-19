@@ -7,7 +7,7 @@
     	    <li>
     		    <h3>@shop.Name</h3>
     		    <p>@shop.Description</p>
-    		    <button onclick="location.href='@Url.Action("ShopVisualizer", "Home", shop, null)'">View »</button>
+    		    <button onclick="location.href='@Url.Action("ShopVisualizer", "Home", new {shop = shop.Name}, null)'">View »</button>
     	    </li>
         }
     </ul>
