@@ -65,11 +65,7 @@ namespace APIGateway2._0.Models
                 "VeryExpensiveBank",
                 "Takes 50% of your money.",
                 async (price, from, to)
-                    =>
-                {
-                    //await Task.Delay(TimeSpan.FromSeconds(BankAgent.Rand.Next(0,30)));
-                    return (long)(price * 0.5 * BankAgent.Table(from, to));
-                })
+                    => (long)(price * 0.5 * BankAgent.Table(from, to)))
             );
             
             RegisterAgent(
@@ -77,11 +73,7 @@ namespace APIGateway2._0.Models
                 "QuiteExpensiveBank",
                 "Takes 30% of your money.",
                 async (price, from, to)
-                    =>
-                {
-                    //await Task.Delay(TimeSpan.FromSeconds(BankAgent.Rand.Next(0,30)));
-                    return (long)(price * 0.7 * BankAgent.Table(from, to));
-                })
+                    => (long)(price * 0.7 * BankAgent.Table(from, to)))
             );
             RegisterAgent(
 
@@ -89,44 +81,43 @@ namespace APIGateway2._0.Models
                 "ExpensiveBank",
                 "Takes 10% of your money.",
                 async (price, from, to)
-                    =>
-                {
-                    //await Task.Delay(TimeSpan.FromSeconds(BankAgent.Rand.Next(0,30)));
-                    return (long)(price * 0.9 * BankAgent.Table(from, to));
-                })
+                    => (long)(price * 0.9 * BankAgent.Table(from, to)))
             );
             RegisterAgent(
                 new BankAgent(
                 "CheapBank",
                 "Takes 5% of your money.",
                 async (price, from, to)
-                    =>
-                {
-                    //await Task.Delay(TimeSpan.FromSeconds(BankAgent.Rand.Next(0,30)));
-                    return (long)(price * 0.95 * BankAgent.Table(from, to));
-                })
+                    => (long)(price * 0.95 * BankAgent.Table(from, to)))
             );
             RegisterAgent(
                 new BankAgent(
                 "FairBank",
                 "Takes none of your money.",
                 async (price, from, to)
+                    => (long)(price * BankAgent.Table(from, to)))
+            );
+            RegisterAgent(
+                new BankAgent(
+                "UnresponsiveBank",
+                "Takes an hour to respond to each request.",
+                async (price, from, to)
                     =>
                 {
-                    //await Task.Delay(TimeSpan.FromSeconds(BankAgent.Rand.Next(0,30)));
+                    await Task.Delay(TimeSpan.FromSeconds(3600));
                     return (long)(price * BankAgent.Table(from, to));
                 })
             );
             RegisterAgent(
                 new BankAgent(
-                "UnresponsiveBank",
-                "Never responds to requests.",
-                async (price, from, to)
-                    =>
-                {
-                    await Task.Delay(TimeSpan.FromSeconds(Double.MaxValue));
-                    return (long)(price * BankAgent.Table(from, to));
-                })
+                    "SlowCheapBank",
+                    "Takes a second to respond to each request.",
+                    async (price, from, to)
+                        =>
+                    {
+                        await Task.Delay(TimeSpan.FromSeconds(1));
+                        return (long)(price * 0.95 * BankAgent.Table(from, to));
+                    })
             );
 
 
