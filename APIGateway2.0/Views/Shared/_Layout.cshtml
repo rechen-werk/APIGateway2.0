@@ -29,15 +29,114 @@
     </div>
 </div>
 <div class="container body-content">
-    @RenderBody()
-    <hr/>
-    <footer>
-        <p>SE in Softwareengineering - Group 2 - C#</p>
-    </footer>
+	@RenderBody()
 </div>
+<footer>
+	<hr/>
+	<div class="container body-content">
+		<p>SE in Softwareengineering - Group 2 - C#</p>
+    </div>
+</footer>
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")
 @RenderSection("scripts", required: false)
 </body>
 </html>
+<style>
+    body {
+		background: #262a2b;
+		color: #b7b7b7;
+	}
+	footer {
+	  position: absolute;
+	  bottom: 0;
+	  width: 100%;
+	}
+    .tilesWrap {
+		list-style: none;
+		text-align: center;
+	}
+	.tilesWrap li {
+		display: inline-block;
+		width: 20%;
+		min-width: 200px;
+		max-width: 230px;
+		padding: 80px 20px 40px;
+		position: relative;
+		vertical-align: top;
+		margin: 10px;
+		font-family: 'helvetica', san-serif;
+		min-height: 25vh;
+		background: #2c3031;
+		border: 1px solid #252727;
+		text-align: left;
+	}
+	.tilesWrap li h3 {
+		font-size: 20px;
+		color: #b7b7b7;
+		margin-bottom: 5px;
+	}
+	.tilesWrap li p {
+		font-size: 16px;
+		line-height: 18px;
+		color: #b7b7b7;
+		margin-top: 5px;
+	}
+	.tilesWrap li button {
+		background: transparent;
+		border: 1px solid #b7b7b7;
+		padding: 10px 20px;
+		color: #b7b7b7;
+		border-radius: 3px;
+		position: relative;
+		transition: all 0.3s ease-in-out;
+		transform: translateY(-40px);
+		opacity: 0;
+		cursor: pointer;
+		overflow: hidden;
+	}
+	.tilesWrap li button:before {
+		content: '';
+		position: absolute;
+		height: 100%;
+		width: 120%;
+		background: #b7b7b7;
+		top: 0;
+		opacity: 0;
+		left: -140px;
+		border-radius: 0 20px 20px 0;
+		z-index: -1;
+
+	}
+	.tilesWrap li:hover button {
+		transform: translateY(5px);
+		opacity: 1;
+	}
+	.tilesWrap li button:hover {
+		color: #262a2b;
+	}
+	.tilesWrap li button:hover:before {
+		left: 0;
+		opacity: 1;
+	}
+
+	.tilesWrap li:before {
+		content: '';
+		position: absolute;
+		top: -2px;
+		left: -2px;
+		right: -2px;
+		bottom: -2px;
+		z-index: -1;
+		background: #e0e0e0;
+	}
+	table, th, td {
+		border: 1px solid #b7b7b7;
+  		border-radius: 10px;
+	}
+	.hacky-align {
+		padding-top: 30px;
+		padding-left: 7%;
+	}
+</style>

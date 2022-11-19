@@ -1,9 +1,14 @@
 @using APIGateway2._0.Models
-<h1>Agents</h1>
-
-<ul>
-    @foreach (var shop in (IList<ShopAgent>)ViewData["shops"])
+<div class="hacky-align">
+	<h1>Shops</h1>
+	<ul class="tilesWrap">
+        @foreach (var shop in (IList<ShopAgent>)ViewData["shops"])
         {
-            <li>  @Html.ActionLink(shop.Name, "ShopVisualizer", "Home", shop, null)</li>
+    	    <li>
+    		    <h3>@shop.Name</h3>
+    		    <p>@shop.Description</p>
+    		    <button onclick="location.href='@Url.Action("ShopVisualizer", "Home", shop, null)'">View »</button>
+    	    </li>
         }
-</ul>
+    </ul>
+</div>

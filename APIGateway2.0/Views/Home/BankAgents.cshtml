@@ -1,10 +1,15 @@
 @using APIGateway2._0.Models
-<h1>Banks</h1>
 
-<ul>
-    @foreach (var bank in (IList<BankAgent>)ViewData["banks"])
-    {
-        <li>  @Html.ActionLink(bank.Name, "BankVisualizer", "Home", bank, null)</li>
-    }
-    
-</ul>
+<div class=hacky-align>
+    <h1>Banks</h1>
+    <ul class="tilesWrap">
+        @foreach (var bank in (IList<BankAgent>)ViewData["banks"])
+        {
+            <li>
+                <h3>@bank.Name</h3>
+                <p>@bank.Description</p>
+                <button onclick="location.href='@Url.Action("BankVisualizer", "Home", bank, null)'">View »</button>
+            </li>
+        }
+    </ul>
+</div>

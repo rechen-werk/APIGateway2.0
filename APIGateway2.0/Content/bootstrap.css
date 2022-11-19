@@ -1586,20 +1586,9 @@ pre code {
   margin-right: auto;
   margin-left: auto;
 }
-@media (min-width: 768px) {
-  .container {
-    width: 750px;
-  }
-}
-@media (min-width: 992px) {
-  .container {
-    width: 970px;
-  }
-}
-@media (min-width: 1200px) {
-  .container {
-    width: 1170px;
-  }
+.container {
+  padding-left: 5%;
+  padding-right: 5%;
 }
 .container-fluid {
   padding-right: 15px;
@@ -5036,7 +5025,7 @@ a.badge:focus {
   padding-bottom: 30px;
   margin-bottom: 30px;
   color: inherit;
-  background-color: #eeeeee;
+  background-color: #2c3031;
 }
 .jumbotron h1,
 .jumbotron .h1 {

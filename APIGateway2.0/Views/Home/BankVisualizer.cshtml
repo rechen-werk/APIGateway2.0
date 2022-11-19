@@ -1,34 +1,29 @@
 @model APIGateway2._0.Models.BankAgent
 @using APIGateway2._0.Models
 
-<h2>@Model.Name</h2>
-<p>@Model.Description</p>
-
-<table>
-    <th></th>
-    @foreach (var header in Enum.GetValues(typeof(Currency)))
-    {
-        <th>@(((Currency)header).ToString())</th>
-    }
-    @foreach (var from in Enum.GetValues(typeof(Currency)))
-    {
-        <tr>
-            <td>1 @(((Currency)from).ToString())=</td>
-            @foreach (var to in Enum.GetValues(typeof(Currency)))
-            {
+<div class="hacky-align">
+    <h1>@Model.Name</h1>
+    <p>@Model.Description</p>
+    <table>
+        <th></th>
+        @foreach (var header in Enum.GetValues(typeof(Currency)))
+        {
+            <th>@(((Currency)header).ToString())</th>
+        }
+        @foreach (var from in Enum.GetValues(typeof(Currency)))
+        {
+            <tr>
+                <td>1 @(((Currency)from).ToString())=</td>
+                @foreach (var to in Enum.GetValues(typeof(Currency)))
                 {
-                    var current = Model.Convert(100, (Currency)from, (Currency)to).Result;
-                    var full = current / 100;
-                    var cent = current % 100;
-                    <td> @(full).@cent </td>
+                    {
+                        var current = Model.Convert(100, (Currency)from, (Currency)to).Result;
+                        var full = current / 100;
+                        var cent = current % 100;
+                        <td> @(full).@cent </td>
+                    }
                 }
-            }
-        </tr>
-    }
-</table>
-<style>
-    table, th, td {
-      border: 1px solid black;
-      border-radius: 10px;
-    }
-</style>
+            </tr>
+        }
+    </table>
+</div>
