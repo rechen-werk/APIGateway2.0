@@ -8,23 +8,37 @@ namespace APIGateway2._0.Models
     public class ShopAgent : Agent
     {
         private static readonly Random Rand = new Random();
-        private HashSet<Item> AvailableItems = new HashSet<Item>();
-        private Dictionary<Item, int> ItemCount = new Dictionary<Item, int>();
+        private readonly HashSet<Item> _availableItems = new HashSet<Item>();
+        private readonly Dictionary<Item, int> _itemCount = new Dictionary<Item, int>();
 
         public ShopAgent() {}
         public ShopAgent(string name, string description, params Item[] items) : base(name, description)
         {
             foreach (var item in items)
             {
-                AvailableItems.Add(item);
-                ItemCount.Add(item, Rand.Next());
+                _availableItems.Add(item);
+                _itemCount.Add(item, Rand.Next());
             }
         }
 
-        public async Task<List<(Item, int)>> GetItemsWithQuantity()
+        public async Task<HashSet<(Item, int)>> GetItemsWithQuantity()
         {
             await Task.Delay(TimeSpan.FromSeconds(Rand.Next(0, 10)));
-            return AvailableItems.Select(item => (item, ItemCount[item])).ToList();
+            return _availableItems.Select(item => (item, _itemCount[item])).ToHashSet();
+        }
+        
+        public async Task<HashSet<(Item, int)>> RequestItems(Dictionary<Item, int> request)
+        {
+            await Task.Delay(TimeSpan.FromSeconds(Rand.Next(0, 10)));
+            var items = new HashSet<(Item, int)>();  
+
+            foreach (var key in request.Keys.Where(key => _availableItems.Contains(key) && _itemCount[key] >= request[key]))
+            {
+                _itemCount[key] -= request[key];
+                items.Add((key, request[key]));
+            }
+
+            return items;
         }
     }
 }

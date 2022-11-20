@@ -28,6 +28,7 @@ namespace APIGateway2._0.Models
             {
                 return _bankAgentList[name];
             }
+
             return _shopAgentList.ContainsKey(name) ? _shopAgentList[name] : null;
         }
 
@@ -35,13 +36,13 @@ namespace APIGateway2._0.Models
         {
             switch (agent)
             {
-               case BankAgent bankAgent:
-                   _bankAgentList.Add(agent.Name, bankAgent);
-                   break;
-               case ShopAgent shopAgent:
-                   _shopAgentList.Add(agent.Name, shopAgent);
+                case BankAgent bankAgent:
+                    _bankAgentList.Add(agent.Name, bankAgent);
+                    break;
+                case ShopAgent shopAgent:
+                    _shopAgentList.Add(agent.Name, shopAgent);
 
-                   break;
+                    break;
             }
         }
 
@@ -62,69 +63,72 @@ namespace APIGateway2._0.Models
         {
             RegisterAgent(
                 new BankAgent(
-                "VeryExpensiveBank",
-                "Takes 50% of your money.",
-                async (price, from, to)
-                    => {
-                    await Task.Delay(TimeSpan.FromSeconds(1));
-                    return (long) (price * 0.5 * BankAgent.Table(from, to));
-                }
+                    "VeryExpensiveBank",
+                    "Takes 50% of your money.",
+                    async (price, from, to)
+                        =>
+                    {
+                        await Task.Delay(TimeSpan.FromSeconds(1));
+                        return (long) (price * 0.5 * BankAgent.Table(from, to));
+                    }
                 )
             );
-            
+
             RegisterAgent(
                 new BankAgent(
-                "QuiteExpensiveBank",
-                "Takes 30% of your money.",
-                async (price, from, to)
-                    => {
-                    await Task.Delay(TimeSpan.FromSeconds(1));
-                    return (long) (price * 0.7 * BankAgent.Table(from, to));
-                }
+                    "QuiteExpensiveBank",
+                    "Takes 30% of your money.",
+                    async (price, from, to)
+                        =>
+                    {
+                        await Task.Delay(TimeSpan.FromSeconds(1));
+                        return (long) (price * 0.7 * BankAgent.Table(from, to));
+                    }
                 )
             );
             RegisterAgent(
 
                 new BankAgent(
-                "ExpensiveBank",
-                "Takes 10% of your money.",
-                async (price, from, to)
-                    => (long)(price * 0.9 * BankAgent.Table(from, to)))
+                    "ExpensiveBank",
+                    "Takes 10% of your money.",
+                    async (price, from, to)
+                        => (long) (price * 0.9 * BankAgent.Table(from, to)))
             );
             RegisterAgent(
                 new BankAgent(
-                "CheapBank",
-                "Takes 5% of your money.",
-                async (price, from, to)
-                    => {
-                    await Task.Delay(TimeSpan.FromSeconds(1));
-                    return (long) (price * 0.95 * BankAgent.Table(from, to));
-                }
+                    "CheapBank",
+                    "Takes 5% of your money.",
+                    async (price, from, to)
+                        =>
+                    {
+                        await Task.Delay(TimeSpan.FromSeconds(1));
+                        return (long) (price * 0.95 * BankAgent.Table(from, to));
+                    }
                 )
             );
             RegisterAgent(
                 new BankAgent(
-                "FairBank",
-                "Takes none of your money.",
-                async (price, from, to)
-                    =>
-                {
-                    await Task.Delay(TimeSpan.FromSeconds(1));
-                    return (long) (price * BankAgent.Table(from, to));
-                }
-                
+                    "FairBank",
+                    "Takes none of your money.",
+                    async (price, from, to)
+                        =>
+                    {
+                        await Task.Delay(TimeSpan.FromSeconds(1));
+                        return (long) (price * BankAgent.Table(from, to));
+                    }
+
                 )
             );
             RegisterAgent(
                 new BankAgent(
-                "UnresponsiveBank",
-                "Takes an hour to respond to each request.",
-                async (price, from, to)
-                    =>
-                {
-                    await Task.Delay(TimeSpan.FromSeconds(3600));
-                    return (long)(price * BankAgent.Table(from, to));
-                })
+                    "UnresponsiveBank",
+                    "Takes an hour to respond to each request.",
+                    async (price, from, to)
+                        =>
+                    {
+                        await Task.Delay(TimeSpan.FromSeconds(3600));
+                        return (long) (price * BankAgent.Table(from, to));
+                    })
             );
             RegisterAgent(
                 new BankAgent(
@@ -134,7 +138,7 @@ namespace APIGateway2._0.Models
                         =>
                     {
                         await Task.Delay(TimeSpan.FromSeconds(1));
-                        return (long)(price * 0.95 * BankAgent.Table(from, to));
+                        return (long) (price * 0.95 * BankAgent.Table(from, to));
                     })
             );
 
@@ -236,5 +240,30 @@ namespace APIGateway2._0.Models
                 )
             );
         }
+
+        /*public async Task<int> GetPrice(Dictionary<Item, int> request)
+        {
+            var price = 0;
+
+            foreach (var agent in Shops)
+            {
+                price = await GetPrice()
+            }
+
+            return price;
+        }
+
+
+        public async Task<int> GetPriceAsync(Dictionary<Item, int> request)
+        {
+            var price = 0;
+
+            foreach (var agent in Shops)
+            {
+                price = await agent.RequestItems(request);
+            }
+
+            return price;
+        }*/
     }
 }
