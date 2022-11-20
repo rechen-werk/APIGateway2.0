@@ -7,9 +7,9 @@ namespace APIGateway2._0.Models
 {
     public class ShopAgent : Agent
     {
-        public static readonly Random Rand = new Random();
-        public HashSet<Item> AvailableItems = new HashSet<Item>();
-        public Dictionary<Item, int> ItemCount = new Dictionary<Item, int>();
+        private static readonly Random Rand = new Random();
+        private HashSet<Item> AvailableItems = new HashSet<Item>();
+        private Dictionary<Item, int> ItemCount = new Dictionary<Item, int>();
 
         public ShopAgent() {}
         public ShopAgent(string name, string description, params Item[] items) : base(name, description)
@@ -23,7 +23,7 @@ namespace APIGateway2._0.Models
 
         public async Task<List<(Item, int)>> GetItemsWithQuantity()
         {
-            //await Task.Delay(TimeSpan.FromSeconds(Rand.Next(0, 30)));
+            await Task.Delay(TimeSpan.FromSeconds(Rand.Next(0, 10)));
             return AvailableItems.Select(item => (item, ItemCount[item])).ToList();
         }
     }
