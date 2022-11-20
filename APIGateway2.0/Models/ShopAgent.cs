@@ -21,9 +21,19 @@ namespace APIGateway2._0.Models
             }
         }
 
+        public async Task<(Item, int)> GetItemWithQuantity(ItemType item)
+        {
+            await Task.Delay(TimeSpan.FromSeconds(Rand.Next(0, 2)));
+            return _itemCount
+                .Where(itemWithCount => itemWithCount.Key.Type == item)
+                .Select(itemWithCount => (itemWithCount.Key, itemWithCount.Value))
+                .First();
+
+        }
+
         public async Task<HashSet<(Item, int)>> GetItemsWithQuantity()
         {
-            await Task.Delay(TimeSpan.FromSeconds(Rand.Next(0, 10)));
+            await Task.Delay(TimeSpan.FromSeconds(Rand.Next(0, 2)));
             return _availableItems.Select(item => (item, _itemCount[item])).ToHashSet();
         }
         
