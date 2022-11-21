@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace APIGateway2._0.Models
 {
-    internal class AgentHub
+    public class AgentHub
     {
         private readonly Dictionary<string, ShopAgent> _shopAgentList = new Dictionary<string, ShopAgent>();
         private readonly Dictionary<string, BankAgent> _bankAgentList = new Dictionary<string, BankAgent>();
@@ -126,7 +126,7 @@ namespace APIGateway2._0.Models
                     async (price, from, to)
                         =>
                     {
-                        await Task.Delay(TimeSpan.FromSeconds(3600));
+                        await Task.Delay(TimeSpan.FromSeconds(1));
                         return (long) (price * BankAgent.Table(from, to));
                     })
             );
@@ -240,48 +240,46 @@ namespace APIGateway2._0.Models
                 )
             );
         }
-        /*
-        public async Task<int> GetPrice(Dictionary<Item, int> request)
-        {
-            var price = 0;
 
-            foreach (var agent in Shops)
-            {
-                price = await GetPrice();
-            }
-
-            return price;
-        }*/
-
-
-
-        /*public async Task<long> GetPriceAsync(List<(ItemType type, Currency currency, int amount)> request)
+        public async Task<long> GetPriceAsync(List<(ItemType type, Currency currency, int amount)> request)
         {
             long priceAccumulator = 0;
 
             foreach (var item in request)
             {
-                var itemCounter = 0;
-                var cheapShops = await GetShopsSellingOrderedByPriceAscending(item.type, item.currency);
-                foreach (var cheapShop in cheapShops)
-                {
-                    if (itemCounter == item.amount)
-                    {
-                        break;
-                    }
-                    var itemWithQuantity = await cheapShop.GetItemWithQuantity(item.type);
-                    if (itemWithQuantity.Item2 == item.amount - itemCounter)
-                    {
-                        itemCounter += itemWithQuantity.Item2;
-                        priceAccumulator += (await GetBestExchangeRate(itemWithQuantity.Item1.Currency, item.currency))
-                            .Convert()
-                    }
-
-                }
+                priceAccumulator += await GetPriceAsync(request);
             }
 
             return priceAccumulator;
-        }*/
+        }
+
+        public async Task<long> GetPriceAsync((ItemType type, Currency currency, int amount) request)
+        {
+            long priceAccumulator = 0;
+            var itemCounter = 0;
+            var cheapShops = await GetShopsSellingOrderedByPriceAscending(request.type, request.currency);
+
+            foreach (var shop in cheapShops)
+            {
+                if (itemCounter == request.amount)
+                {
+                    break;
+                }
+
+                var itemWithQuantity = await shop.GetItemWithQuantity(request.type);
+                var bestBank = await GetBestExchangeRate(request.currency, itemWithQuantity.Item1.Currency);
+                var itemsToAdd = itemCounter + itemWithQuantity.Item2 <= request.amount
+                    ? itemWithQuantity.Item2
+                    : request.amount - itemCounter;
+                itemCounter += itemsToAdd;
+                priceAccumulator += itemsToAdd * (
+                    request.currency == itemWithQuantity.Item1.Currency
+                        ? itemWithQuantity.Item1.Price
+                        : await bestBank.Convert(itemWithQuantity.Item1.Price, request.currency, itemWithQuantity.Item1.Currency));
+
+            }
+            return priceAccumulator;
+        }
 
         public async Task<List<ShopAgent>> GetShopsSellingOrderedByPriceAscending(ItemType item, Currency currency) =>
             await Task.Run(async () =>
@@ -319,12 +317,33 @@ namespace APIGateway2._0.Models
             });
         }
 
-        public async Task<BankAgent> GetBestExchangeRate(Currency from, Currency to) =>
-            await Banks
-                .Select(async bank => (bank, rate: await bank.Convert(100, from, to)))
-                .OrderBy(async tuple => (await tuple).rate)
-                .Select(async tuple => (await tuple).bank)
-                .First();
+        public async Task<BankAgent> GetBestExchangeRate(Currency from, Currency to)
+        {
+            (BankAgent agent, long value) curMin = (null, long.MaxValue);
+            foreach (var bankAgent in _bankAgentList.Select(async agentWithPrice => (agent: agentWithPrice.Value, value: await agentWithPrice.Value.Convert(100, from, to))))
+            {
+                var bankWithPrice = await bankAgent;
+                if (curMin.agent == null)
+                {
+                    curMin = (bankWithPrice.agent, bankWithPrice.value);
+                    continue;
+                }
+
+                if (bankWithPrice.value > curMin.value)
+                {
+                    curMin = (bankWithPrice.agent, bankWithPrice.value);
+                }
+            }
+
+            return curMin.agent;
+        }
+        public async Task<BankAgent> GetFirstExchangeRate(Currency from, Currency to) =>
+            (await await Task.WhenAny(
+                _bankAgentList
+                    .Select(async agent =>
+                        (agent: agent.Value, value: await agent.Value.Convert(100, from, to)))
+                    .ToArray())).agent;
     }
+
 
 }
