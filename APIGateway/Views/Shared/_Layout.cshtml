@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+<div class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Webshop", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("Case Study", "CaseStudy", "Home")</li>
+                <li>@Html.ActionLink("Bank Agents", "BankAgents", "Home")</li>
+                <li>@Html.ActionLink("Shop Agents", "ShopAgents", "Home")</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container body-content">
+    @RenderBody()
+</div>
+<div style="clear:both; height:60px;"></div>
+<footer>
+    <div>
+        <hr style="margin-top:0"/>
+        <p style="padding-left: 75px;padding-bottom: 10px">SE in Softwareengineering - Group 2 - C#</p>
+    </div>
+</footer>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@RenderSection("scripts", false)
+</body>
+</html>
+<style>
+    body {
+		background: #262a2b;
+		color: #b7b7b7;
+	}
+	footer {
+	  bottom: 0;
+	  width: 100%;
+      position: fixed;
+      background: #161718;
+      border-width: 0px;
+	}
+    .tilesWrap {
+		list-style: none;
+		text-align: center;
+	}
+	.tilesWrap li {
+		display: inline-block;
+		width: 20%;
+		min-width: 200px;
+		max-width: 230px;
+		padding: 80px 20px 40px;
+		position: relative;
+		vertical-align: top;
+		margin: 10px;
+		font-family: 'helvetica', san-serif;
+		min-height: 25vh;
+		background: #2c3031;
+		border: 1px solid #252727;
+		text-align: left;
+	}
+	.tilesWrap li h3 {
+		font-size: 20px;
+		color: #b7b7b7;
+		margin-bottom: 5px;
+	}
+	.tilesWrap li p {
+		font-size: 16px;
+		line-height: 18px;
+		color: #b7b7b7;
+		margin-top: 5px;
+	}
+	.tilesWrap li button {
+		background: transparent;
+		border: 1px solid #b7b7b7;
+		padding: 10px 20px;
+		color: #b7b7b7;
+		border-radius: 3px;
+		position: relative;
+		transition: all 0.3s ease-in-out;
+		transform: translateY(-40px);
+		opacity: 0;
+		cursor: pointer;
+		overflow: hidden;
+	}
+	.tilesWrap li button:before {
+		content: '';
+		position: absolute;
+		height: 100%;
+		width: 120%;
+		background: #b7b7b7;
+		top: 0;
+		opacity: 0;
+		left: -140px;
+		border-radius: 0 20px 20px 0;
+		z-index: -1;
+
+	}
+	.tilesWrap li:hover button {
+		transform: translateY(5px);
+		opacity: 1;
+	}
+	.tilesWrap li button:hover {
+		color: #262a2b;
+	}
+	.tilesWrap li button:hover:before {
+		left: 0;
+		opacity: 1;
+	}
+
+	.tilesWrap li:before {
+		content: '';
+		position: absolute;
+		top: -2px;
+		left: -2px;
+		right: -2px;
+		bottom: -2px;
+		z-index: -1;
+		background: #e0e0e0;
+	}
+	table, th, td {
+		border: 1px solid #b7b7b7;
+  		border-radius: 10px;
+	}
+	.hacky-align {
+		padding-top: 30px;
+		padding-left: 7%;
+	}
+</style>

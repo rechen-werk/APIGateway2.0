@@ -1,0 +1,18 @@
+@using APIGateway.Models
+@{
+    ViewBag.Title = "Banks";
+}
+
+<div class="hacky-align">
+    <h1>Banks</h1>
+    <ul class="tilesWrap">
+        @foreach (var bank in (IList<BankAgent>)ViewData["banks"])
+        {
+            <li>
+                <h3>@bank.Name</h3>
+                <p>@bank.Description</p>
+                <button onclick="location.href='@Url.Action("BankVisualizer", "Home", new { bank = bank.Name }, null)'">View »</button>
+            </li>
+        }
+    </ul>
+</div>
