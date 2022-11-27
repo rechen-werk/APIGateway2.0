@@ -4,6 +4,27 @@
 
 <div class="hacky-align">
     <h1>Case Study</h1>
-    <button onclick="location.href='@Url.Action("ClickCaseStudyButton", "Home", null, null)'">Test »</button>
+    <h2>Examples</h2>
+    
+    <ul class="tilesWrap">
+        <li>
+            <h3>All Banks</h3>
+            <p>Get a list of all available Banks.</p>
+            <button onclick="location.href='@Url.Action("AllBanks", "Home", null, null)'">Start &#187</button>
+        </li>
+        <li>
+            <h3>All Shops</h3>
+            <p>Get a list of all available Shops.</p>
+            <button onclick="location.href='@Url.Action("AllShops", "Home", null, null)'">Start &#187</button>
+        </li>
+    </ul>
+    
+    @if (ViewData["resultList"] != null)
+    {
+        foreach (var line in ((string)ViewData["resultList"]).Split('\n'))
+        {
+            <p>@line</p>
+        }
+    }
 
 </div>

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,12 +14,12 @@ namespace APIGateway.Models
         }
 
         public async Task<ICollection<BankAgent>> AllBanks() =>
-            await _hub.Banks();
+            await Task.Run(_hub.Banks);
         public async Task<ICollection<ShopAgent>> AllShops() =>
-            await _hub.Shops();
+            await Task.Run(_hub.Shops);
 
         public async Task<Agent> Agent(string name) =>
-            await _hub.GetAgent(name);
+            await Task.Run(() => _hub.GetAgent(name));
 
         public async Task<BankAgent> FastestBank(double price, Currency from, Currency to)
         {
@@ -113,5 +114,43 @@ namespace APIGateway.Models
             return priceAccumulator;
         }
 
+        public async Task<double[,]> BankTable(string agent)
+        {
+            var agentInstance = _hub.GetAgent(agent);
+            var bankAgent = (BankAgent)agentInstance;
+            var tasks = new Task<double>[
+                Enum.GetValues(typeof(Currency)).Length,
+                Enum.GetValues(typeof(Currency)).Length];
+            var doubles = new double[
+                tasks.GetLength(0),
+                tasks.GetLength(1)];
+            foreach (var from in (Currency[])Enum.GetValues(typeof(Currency)))
+            {
+                foreach (var to in (Currency[])Enum.GetValues(typeof(Currency)))
+                {
+                    tasks[(int)from, (int)to] = bankAgent.Convert(1, from, to);
+                }
+            }
+
+            for (int row = 0; row < tasks.GetLength(0); row++)
+            {
+                for (int col = 0; col < tasks.GetLength(1); col++)
+                {
+                    doubles[row, col] = await tasks[row, col];
+                }
+            }
+
+            return doubles;
+            
+        }
+
+        public async Task<List<(Product product, int quantity)>> Products(string agent)
+        {
+            var agentInstance = _hub.GetAgent(agent);
+            var shopAgent = (ShopAgent)agentInstance;
+            var items = (Item[]) Enum.GetValues(typeof(Item));
+            var set = await shopAgent.GetItemsWithQuantity();
+            return set.ToList();
+    }
     }
 }

@@ -176,6 +176,7 @@
         <Content Include="Views\Home\BankAgents.cshtml" />
         <Content Include="Views\Home\BankVisualizer.cshtml" />
         <Content Include="Views\Home\CaseStudy.cshtml" />
+        <Content Include="Views\Home\ErrorView.cshtml" />
         <Content Include="Views\Home\ShopAgents.cshtml" />
         <Content Include="Views\Home\ShopVisualizer.cshtml" />
         <Content Include="Web.config" />

@@ -23,7 +23,7 @@ namespace APIGateway.Models
 
         public async Task<(Product product, int quantity)> GetItemWithQuantity(Item item)
         {
-            await Task.Delay(TimeSpan.FromSeconds(Rand.Next(0, 2)));
+            await Task.Delay(Rand.Next(0, 2).Seconds());
             try
             {
                 return _availableProducts

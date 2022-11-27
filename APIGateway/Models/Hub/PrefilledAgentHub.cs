@@ -37,7 +37,7 @@ namespace APIGateway.Models
                     "Takes 10% of your money.",
                     async (price, from, to)
                         => price * 0.9 * BankAgent.Table(from, to))
-            );
+            ); 
             RegisterAgent(
                 new BankAgent(
                     "CheapBank",
@@ -69,7 +69,7 @@ namespace APIGateway.Models
                     async (price, from, to)
                         =>
                     {
-                        await Task.Delay(1.Second());
+                        await Task.Delay(1.Hour());
                         return price * BankAgent.Table(from, to);
                     })
             );

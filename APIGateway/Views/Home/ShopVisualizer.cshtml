@@ -1,3 +1,4 @@
+@using APIGateway.Models
 @model APIGateway.Models.ShopAgent
 
 @{
@@ -11,12 +12,15 @@
         <th>Item</th>
         <th>Price</th>
         <th>Available items</th>
-        @foreach (var item in Model.GetItemsWithQuantity().Result)
+        @{
+            var list = (List<(Product product, int quantity)>) ViewData["list"];
+        }
+        @foreach (var item in list)
         {
             <tr>
-                <td>@item.Item1.Type.ToString()</td>
-                <td>@item.Item1.Price @item.Item1.Currency.ToString()</td>
-                <td>@item.Item2</td>
+                <td>@item.product.Type.ToString()</td>
+                <td>@item.product.Price @item.Item1.Currency.ToString()</td>
+                <td>@item.quantity</td>
             </tr>
         }
     </table>
