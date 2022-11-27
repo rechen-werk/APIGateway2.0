@@ -16,19 +16,19 @@ namespace APIGateway.Models
             { 1.02, 1.06, 144.00, 0.89, 1.57, 1.41, 1.00 } //CHF
         };
 
-        private readonly Func<long, Currency, Currency, Task<long>> convert;
+        private readonly Func<double, Currency, Currency, Task<double>> convert;
 
         public BankAgent()
         {
         }
 
-        public BankAgent(string name, string description, Func<long, Currency, Currency, Task<long>> converter) :
+        public BankAgent(string name, string description, Func<double, Currency, Currency, Task<double>> converter) :
             base(name, description)
         {
             convert = converter;
         }
 
-        public async Task<long> Convert(long price, Currency from, Currency to)
+        public async Task<double> Convert(double price, Currency from, Currency to)
         {
             return await convert(price, from, to);
         }

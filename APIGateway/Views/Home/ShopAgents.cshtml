@@ -5,7 +5,7 @@
 <div class="hacky-align">
     <h1>Shops</h1>
     <ul class="tilesWrap">
-        @foreach (var shop in (IList<ShopAgent>)ViewData["shops"])
+        @foreach (var shop in (List<ShopAgent>)ViewData["shops"])
         {
             <li>
                 <h3>@shop.Name</h3>

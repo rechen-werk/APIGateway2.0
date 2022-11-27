@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using APIGateway.Models;
@@ -7,54 +9,59 @@ namespace APIGateway.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly AgentHub _hub = new PrefilledAgentHub();
+        private readonly AgentHub _hub;
+        private readonly CaseStudy _caseStudy;
 
-        public async Task<ActionResult> Index()
+        public HomeController()
+        {
+            _hub = new PrefilledAgentHub();
+            _caseStudy = new CaseStudy(_hub);
+            ViewData["banks"] = new List<BankAgent>();
+            ViewData["shops"] = new List<ShopAgent>();
+        }
+
+        public ActionResult Index()
         {
             return View();
         }
 
-        public async Task<ActionResult> BankAgents()
+        public ActionResult BankAgents()
         {
-            ViewData["banks"] = _hub.Banks;
+            Task.Run(async() => ViewData["banks"] = (await _hub.Banks()).ToList());
+
             return View();
         }
 
-        public async Task<ActionResult> ShopAgents()
+        public  ActionResult ShopAgents()
         {
-            ViewData["shops"] = _hub.Shops;
+            Task.Run(async() => ViewData["shops"] = (await _hub.Shops()).ToList());
             return View();
         }
 
-        public async Task<ActionResult> CaseStudy()
+        public ActionResult CaseStudy()
         {
             ViewData["hub"] = _hub;
             return View();
         }
 
-        public async Task<ActionResult> BankVisualizer(string bank)
+        public ActionResult BankVisualizer(string bank)
         {
-            return View((BankAgent)_hub.GetAgent(bank));
+            return View((BankAgent)  _hub.GetAgent(bank).Result);
         }
 
-        public async Task<ActionResult> ShopVisualizer(string shop)
+        public ActionResult ShopVisualizer(string shop)
         {
-            return View((ShopAgent)_hub.GetAgent(shop));
+            return View((ShopAgent) _hub.GetAgent(shop).Result);
         }
 
-        public async Task<ActionResult> ClickCaseStudyButton()
+        public ActionResult ClickCaseStudyButton()
         {
-            Task.Run(async () =>
-            {
-                var start = DateTime.UtcNow;
-                var val = await _hub.GetBestExchangeRate(Currency.USD, Currency.EUR);
-                var end = DateTime.UtcNow;
-                var timeDiff = end - start;
-                Console.WriteLine(Convert.ToInt32(timeDiff.TotalMilliseconds));
-                Console.WriteLine(val.Name);
-            });
-
-
+            var start = DateTime.UtcNow;
+            var val =  _caseStudy.CheapestConvert(1, Currency.EUR, Currency.USD).Result;
+            var end = DateTime.UtcNow;
+            var timeDiff = end - start;
+            Console.WriteLine(Convert.ToInt32(timeDiff.TotalMilliseconds));
+            Console.WriteLine(val);
             return View("CaseStudy");
         }
     }

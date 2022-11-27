@@ -14,7 +14,7 @@ namespace APIGateway.Models
                         =>
                     {
                         await Task.Delay(Half.A.Second());
-                        return (long)(price * 0.5 * BankAgent.Table(from, to));
+                        return price * 0.5 * BankAgent.Table(from, to);
                     }
                 )
             );
@@ -27,7 +27,7 @@ namespace APIGateway.Models
                         =>
                     {
                         await Task.Delay(1.Second());
-                        return (long)(price * 0.7 * BankAgent.Table(from, to));
+                        return price * 0.7 * BankAgent.Table(from, to);
                     }
                 )
             );
@@ -36,7 +36,7 @@ namespace APIGateway.Models
                     "ExpensiveBank",
                     "Takes 10% of your money.",
                     async (price, from, to)
-                        => (long)(price * 0.9 * BankAgent.Table(from, to)))
+                        => price * 0.9 * BankAgent.Table(from, to))
             );
             RegisterAgent(
                 new BankAgent(
@@ -46,7 +46,7 @@ namespace APIGateway.Models
                         =>
                     {
                         await Task.Delay(1.5.Seconds());
-                        return (long)(price * 0.95 * BankAgent.Table(from, to));
+                        return price * 0.95 * BankAgent.Table(from, to);
                     }
                 )
             );
@@ -58,7 +58,7 @@ namespace APIGateway.Models
                         =>
                     {
                         await Task.Delay(Quarter.A.Second());
-                        return (long)(price * BankAgent.Table(from, to));
+                        return price * BankAgent.Table(from, to);
                     }
                 )
             );
@@ -70,7 +70,7 @@ namespace APIGateway.Models
                         =>
                     {
                         await Task.Delay(1.Second());
-                        return (long)(price * BankAgent.Table(from, to));
+                        return price * BankAgent.Table(from, to);
                     })
             );
             RegisterAgent(
@@ -81,7 +81,7 @@ namespace APIGateway.Models
                         =>
                     {
                         await Task.Delay(0.31415.Seconds());
-                        return (long)(price * 0.95 * BankAgent.Table(from, to));
+                        return price * 0.95 * BankAgent.Table(from, to);
                     })
             );
 

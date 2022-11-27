@@ -2,14 +2,14 @@ namespace APIGateway.Models
 {
     public sealed class Product
     {
-        public Product(Item type, long price, Currency currency)
+        public Product(Item type, double price, Currency currency)
         {
             Type = type;
             Price = price;
             Currency = currency;
         }
 
-        public long Price { get; }
+        public double Price { get; }
         public Currency Currency { get; }
         public Item Type { get; }
     }
