@@ -8,7 +8,7 @@ namespace APIGateway.Models
         {
             RegisterAgent(
                 new BankAgent(
-                    "VeryExpensiveBank",
+                    "DibaDu",
                     "Takes 50% of your money.",
                     async (price, from, to)
                         =>
@@ -21,7 +21,7 @@ namespace APIGateway.Models
 
             RegisterAgent(
                 new BankAgent(
-                    "QuiteExpensiveBank",
+                    "Sparkasse",
                     "Takes 30% of your money.",
                     async (price, from, to)
                         =>
@@ -33,14 +33,14 @@ namespace APIGateway.Models
             );
             RegisterAgent(
                 new BankAgent(
-                    "ExpensiveBank",
+                    "Volksbank",
                     "Takes 10% of your money.",
                     async (price, from, to)
                         => price * 0.9 * BankAgent.Table(from, to))
             ); 
             RegisterAgent(
                 new BankAgent(
-                    "CheapBank",
+                    "Raiffeisen Bank",
                     "Takes 5% of your money.",
                     async (price, from, to)
                         =>
@@ -52,7 +52,7 @@ namespace APIGateway.Models
             );
             RegisterAgent(
                 new BankAgent(
-                    "FairBank",
+                    "Oberbank",
                     "Takes none of your money.",
                     async (price, from, to)
                         =>
@@ -64,18 +64,18 @@ namespace APIGateway.Models
             );
             RegisterAgent(
                 new BankAgent(
-                    "UnresponsiveBank",
-                    "Takes an hour to respond to each request.",
+                    "SberBank",
+                    "Takes 10 Seconds to respond to each request.",
                     async (price, from, to)
                         =>
                     {
-                        await Task.Delay(1.Hour());
-                        return price * BankAgent.Table(from, to);
+                        await Task.Delay(10.Seconds());
+                        return price * 0.33 * BankAgent.Table(from, to);
                     })
             );
             RegisterAgent(
                 new BankAgent(
-                    "SlowCheapBank",
+                    "Bank Of Amerika",
                     "Takes a second to respond to each request.",
                     async (price, from, to)
                         =>

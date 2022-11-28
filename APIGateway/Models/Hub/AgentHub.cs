@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using APIGateway.Models.Exceptions;
 
 namespace APIGateway.Models
@@ -14,7 +15,7 @@ namespace APIGateway.Models
         public ICollection<BankAgent> Banks() =>
             _bankAgentList.Values;
 
-        public Agent GetAgent(string name)
+        public async Task<Agent> GetAgent(string name)
         {
             if (_bankAgentList.ContainsKey(name)) return _bankAgentList[name];
             if (_shopAgentList.ContainsKey(name)) return _shopAgentList[name];

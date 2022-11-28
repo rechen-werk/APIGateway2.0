@@ -1,10 +1,60 @@
+@using APIGateway.Models
 @{
     ViewBag.Title = "Case Study";
 }
+@{
+    List<SelectListItem> currencies = new List<SelectListItem>();
+    List<SelectListItem> items = new List<SelectListItem>();
 
+    foreach (var currency in Enum.GetValues(typeof(Currency)))
+    {
+        currencies.Add(new SelectListItem
+        {
+            Text = currency.ToString(),
+            Value = currency.ToString()
+        });
+    }
+    foreach (var item in Enum.GetValues(typeof(Item)))
+    {
+        items.Add(new SelectListItem
+        {
+            Text = item.ToString(),
+            Value = item.ToString()
+        });
+    }
+}
 <div class="hacky-align">
     <h1>Case Study</h1>
-    <h2>Examples</h2>
+    @if (ViewData["resultList"] != null)
+    {
+        foreach (var line in ((string)ViewData["resultList"]).Split('\n'))
+        {
+            <p>@line</p>
+        }
+    }
+    @if (ViewData["resultAgent"] != null)
+    {
+        var agent = (Agent)ViewData["resultAgent"];
+        <h4>@agent.Name</h4>
+        if (agent.GetType() == typeof(ShopAgent))
+        {
+            <h5>@nameof(ShopAgent)</h5>
+        }
+        if (agent.GetType() == typeof(BankAgent))
+        {
+            <h5>@nameof(BankAgent)</h5>
+        }
+        <p>@agent.Description</p>
+        
+    }
+    @if (ViewData["resultAgentList"] != null)
+    {
+        var agents = (List<ShopAgent>)ViewData["resultAgentList"];
+        foreach (var agent in agents)
+        {
+            <p>@agent.Name</p>
+        }
+    }
     
     <ul class="tilesWrap">
         <li>
@@ -17,14 +67,130 @@
             <p>Get a list of all available Shops.</p>
             <button onclick="location.href='@Url.Action("AllShops", "Home", null, null)'">Start &#187</button>
         </li>
+        <li>
+            <h3>Agent</h3>
+            <p>Get all data to an Agent.</p>
+            @using (Html.BeginForm("Agent", "Home", FormMethod.Post)) 
+            {
+                <input type="text" id="name" name="name" value="" />
+                <button type="submit" id="btn" >Start &#187</button>
+            }
+        </li>
+        <li>
+                    <h3>Bank Table</h3>
+                    <p>Get the conversion table of a Bank.</p>
+                    @using (Html.BeginForm("BankTable", "Home", FormMethod.Post)) 
+                    {
+                        <input type="text" id="bank" name="bank" bank="" />
+                        <button type="submit" id="btn" >Start &#187</button>
+                    }
+                </li>
+        <li>
+                    <h3>Products</h3>
+                    <p>Get the list of products of the wanted Shop.</p>
+                    @using (Html.BeginForm("Products", "Home", FormMethod.Post)) 
+                    {
+                        <input type="text" id="shop" name="shop" bank="" />
+                        <button type="submit" id="btn" >Start &#187</button>
+                    }
+                </li>
+        <li>
+                    <h3>All Sellers</h3>
+                    <p>Gets all Stores which sell the said Item.</p>
+                    @using (Html.BeginForm("AllSellers", "Home", FormMethod.Post)) 
+                    {
+                        @Html.Label("Item")
+                        @Html.DropDownList("Item", items, new { @class = "form-control" })
+                        <button type="submit" id="btn" >Start &#187</button>
+                    }
+                </li>
+        <li>
+            <h3>Fastest Seller</h3>
+            <p>Gets the Store that responds the fastest.</p>
+            @using (Html.BeginForm("FastestSeller", "Home", FormMethod.Post)) 
+            {
+                @Html.Label("Item")
+                @Html.DropDownList("Item", items, new { @class = "form-control" })
+                <button type="submit" id="btn" >Start &#187</button>
+            }
+        </li>
+        <li>
+            <h3>Fastest Bank</h3>
+            <p>Search for the first bank that converts your request.</p>
+            @using (Html.BeginForm("FastestBank", "Home", FormMethod.Post)) 
+            {
+                @Html.Label("From")
+                @Html.DropDownList("From", currencies, new { @class = "form-control" })
+                @Html.Label("To")
+                @Html.DropDownList("To", currencies, new { @class = "form-control" })
+                <button type="submit" id="btn" >Start &#187</button>
+            }
+        </li>
+        <li>
+            <h3>Best Bank</h3>
+            <p>Search for the cheapest bank that converts your request.</p>
+            @using (Html.BeginForm("BestBank", "Home", FormMethod.Post)) 
+            {
+                @Html.Label("From")
+                @Html.DropDownList("From", currencies, new { @class = "form-control" })
+                @Html.Label("To")
+                @Html.DropDownList("To", currencies, new { @class = "form-control" })
+                <button type="submit" id="btn" >Start &#187</button>
+            }
+        </li>
+        <li>
+            <h3>Cheapest Convert</h3>
+            <p>Calculates the minimum of how much of your currency you need to cover the amount in the second currency.</p>
+            @using (Html.BeginForm("CheapestConvert", "Home", FormMethod.Post)) 
+            {
+                @Html.Label("Amount")
+                @Html.TextBox("Amount" , 1)
+                @Html.Label("From")
+                @Html.DropDownList("From", currencies, new { @class = "form-control" })
+                @Html.Label("To")
+                @Html.DropDownList("To", currencies, new { @class = "form-control" })
+                <button type="submit" id="btn" >Start &#187</button>
+            }
+        </li>
+        <li>
+            <h3>Fastest Convert</h3>
+            <p>Calculates how much of your currency you need to cover the amount in the second currency as quickly as possible.</p>
+            @using (Html.BeginForm("FastestConvert", "Home", FormMethod.Post)) 
+            {
+                @Html.Label("Amount")
+                @Html.TextBox("Amount" , 1)
+                @Html.Label("From")
+                @Html.DropDownList("From", currencies, new { @class = "form-control" })
+                @Html.Label("To")
+                @Html.DropDownList("To", currencies, new { @class = "form-control" })
+                <button type="submit" id="btn" >Start &#187</button>
+            }
+        </li>
+        <li>
+            <h3>Price Of</h3>
+            <p>Get the price of the order.</p>
+            @using (Html.BeginForm("PriceOf", "Home", FormMethod.Post)) 
+            {
+                @Html.Label("Item")
+                @Html.DropDownList("Item", items, new { @class = "form-control" })
+                @Html.Label("Currency")
+                @Html.DropDownList("Currency", currencies, new { @class = "form-control" })
+                @Html.Label("Quantity")
+                <input type="number" id="quantity" name="quantity" value=1 />
+                <button type="submit" id="btn" >Start &#187</button>
+            }
+        </li>
+        <li>
+                    <h3>Cheapest Seller</h3>
+                    <p>Gets the cheapest Store which sells the said Item.</p>
+                    @using (Html.BeginForm("CheapestSeller", "Home", FormMethod.Post)) 
+                    {
+                        @Html.Label("Item")
+                        @Html.DropDownList("Item", items, new { @class = "form-control" })
+                        @Html.Label("Currency")
+                        @Html.DropDownList("Currency", currencies, new { @class = "form-control" })
+                        <button type="submit" id="btn" >Start &#187</button>
+                    }
+                </li>
     </ul>
-    
-    @if (ViewData["resultList"] != null)
-    {
-        foreach (var line in ((string)ViewData["resultList"]).Split('\n'))
-        {
-            <p>@line</p>
-        }
-    }
-
 </div>

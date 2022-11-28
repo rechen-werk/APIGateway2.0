@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -105,6 +103,97 @@ namespace APIGateway.Controllers
                     var shops =  await _caseStudy.AllShops();
                     ViewData["resultList"] = string.Join("\n", shops.Select(s => s.Name));
                 })
+                .ContinueWith(_ => View("CaseStudy"));
+
+        [HttpPost]
+        public async Task<ActionResult> Agent(string name) =>
+            await Task
+                .Run(async () => ViewData["resultAgent"] = await _caseStudy.Agent(name))
+                .ContinueWith(_ => View("CaseStudy"));
+
+        [HttpPost]
+        public async Task<ActionResult> FastestBank(string from, string to) =>
+            await Task
+                .Run(async () => ViewData["resultAgent"] = await _caseStudy.FastestBank(
+                    1,  
+                    (Currency)Enum.Parse(typeof(Currency), from), 
+                    (Currency)Enum.Parse(typeof(Currency), to)))
+                .ContinueWith(_ => View("CaseStudy"));
+        
+        [HttpPost]
+        public async Task<ActionResult> BestBank(string from, string to) =>
+            await Task
+                .Run(async () => ViewData["resultAgent"] = await _caseStudy.BestBank(
+                    1,  
+                    (Currency)Enum.Parse(typeof(Currency), from), 
+                    (Currency)Enum.Parse(typeof(Currency), to)))
+                .ContinueWith(_ => View("CaseStudy"));
+
+        [HttpPost]
+        public async Task<ActionResult> CheapestConvert(double amount, string from, string to) =>
+            await Task
+                .Run(async () => ViewData["resultList"] = "Result: " + amount + " " + to + " = " + await _caseStudy.CheapestConvert(
+                    amount,
+                    (Currency)Enum.Parse(typeof(Currency), from), 
+                    (Currency)Enum.Parse(typeof(Currency), to)) + " " + from)
+                .ContinueWith(_ => View("CaseStudy"));
+        
+        [HttpPost]
+        public async Task<ActionResult> FastestConvert(double amount, string from, string to) =>
+            await Task
+                .Run(async () => ViewData["resultList"] = "Result: " + amount + " " + to + " = " + await _caseStudy.FastestConvert(
+                    amount,
+                    (Currency)Enum.Parse(typeof(Currency), from), 
+                    (Currency)Enum.Parse(typeof(Currency), to)) + " " + from)
+                .ContinueWith(_ => View("CaseStudy"));
+
+        [HttpPost]
+        public async Task<ActionResult> AllSellers(string item) =>
+            await Task
+                .Run(async () => ViewData["resultAgentList"] = await _caseStudy.AllSellers(
+                    (Item)Enum.Parse(typeof(Item), item)))
+                .ContinueWith(_ => View("CaseStudy"));
+        
+        [HttpPost]
+        public async Task<ActionResult> CheapestSeller(string item, string currency) =>
+            await Task
+                .Run(async () => ViewData["resultAgent"] = await _caseStudy.CheapestSeller(
+                    (Item)Enum.Parse(typeof(Item), item),
+                    (Currency)Enum.Parse(typeof(Currency), currency)))
+                .ContinueWith(_ => View("CaseStudy"));
+        
+        [HttpPost]
+        public async Task<ActionResult> FastestSeller(string item) =>
+            await Task
+                .Run(async () => ViewData["resultAgent"] = await _caseStudy.FastestSeller(
+                    (Item)Enum.Parse(typeof(Item), item)))
+                .ContinueWith(_ => View("CaseStudy"));
+
+        [HttpPost]
+        public async Task<ActionResult> BankTable(string bank) =>
+            await Task.Run(async () =>
+                {
+                    await BankVisualizer(bank);
+                    return (BankAgent)await _caseStudy.Agent(bank);
+                })
+                .ContinueWith(b => View("BankVisualizer", null, b.Result));
+        
+        [HttpPost]
+        public async Task<ActionResult> Products(string shop) =>
+            await Task.Run(async () =>
+                {
+                    await ShopVisualizer(shop);
+                    return (ShopAgent) await _caseStudy.Agent(shop);
+                })
+                .ContinueWith(s => View("ShopVisualizer", null, s.Result));
+        
+        [HttpPost]
+        public async Task<ActionResult> PriceOf(string item, string currency, int quantity) =>
+            await Task
+                .Run(async () => ViewData["resultList"] = "Result: " +  await _caseStudy.PriceOf(
+                    (Item)Enum.Parse(typeof(Item), item),
+                    (Currency)Enum.Parse(typeof(Currency), currency),
+                    quantity) + " " + currency)
                 .ContinueWith(_ => View("CaseStudy"));
     }
 }

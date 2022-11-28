@@ -19,7 +19,7 @@ namespace APIGateway.Models
             await Task.Run(_hub.Shops);
 
         public async Task<Agent> Agent(string name) =>
-            await Task.Run(() => _hub.GetAgent(name));
+            await _hub.GetAgent(name);
 
         public async Task<BankAgent> FastestBank(double price, Currency from, Currency to)
         {
@@ -34,8 +34,7 @@ namespace APIGateway.Models
 
         public async Task<BankAgent> BestBank(double price, Currency from, Currency to)
         {
-            var banks = await AllBanks();
-            var conversionTasks = banks.Select(async bank => (bank, conversion: await bank.Convert(price, from, to)));
+            var conversionTasks = (await AllBanks()).Select(async bank => (bank, conversion: await bank.Convert(price, from, to)));
             return await await Task.WhenAll(conversionTasks)
                 .ContinueWith(async task =>
                     (await task)
@@ -52,7 +51,7 @@ namespace APIGateway.Models
             await await Task.WhenAny((await AllBanks())
                 .Select(async bank => price / await bank.Convert(1, from, to)));
 
-        public async Task<List<Task<ShopAgent>>> CheapestSellers(Item item, Currency currency)
+        public async Task<List<ShopAgent>> CheapestSellers(Item item, Currency currency)
         {
             return (await AllSellers(item))
                 .Select(async shop => (shop, item: await shop.GetItemWithQuantity(item)))
@@ -65,6 +64,7 @@ namespace APIGateway.Models
                         : await CheapestConvert(product.Price, currency, product.Currency);
                 })
                 .Select(async s => (await s).shop)
+                .Select(s => s.Result)
                 .ToList();
         }
 
@@ -79,7 +79,7 @@ namespace APIGateway.Models
             .ToList();
 
         public async Task<Agent> CheapestSeller(Item item, Currency currency) =>
-            await (await CheapestSellers(item, currency)).First();
+            (await CheapestSellers(item, currency)).First();
 
         public async Task<Agent> FastestSeller(Item item)
         {
@@ -97,7 +97,7 @@ namespace APIGateway.Models
 
             foreach (var shop in cheapShops)
             {
-                var aShop = await shop;
+                var aShop = shop;
                 if (itemCounter == quantity) break;
 
                 var itemWithQuantity = await aShop.GetItemWithQuantity(item);
@@ -116,7 +116,7 @@ namespace APIGateway.Models
 
         public async Task<double[,]> BankTable(string agent)
         {
-            var agentInstance = _hub.GetAgent(agent);
+            var agentInstance = await _hub.GetAgent(agent);
             var bankAgent = (BankAgent)agentInstance;
             var tasks = new Task<double>[
                 Enum.GetValues(typeof(Currency)).Length,
@@ -146,7 +146,7 @@ namespace APIGateway.Models
 
         public async Task<List<(Product product, int quantity)>> Products(string agent)
         {
-            var agentInstance = _hub.GetAgent(agent);
+            var agentInstance = await _hub.GetAgent(agent);
             var shopAgent = (ShopAgent)agentInstance;
             var items = (Item[]) Enum.GetValues(typeof(Item));
             var set = await shopAgent.GetItemsWithQuantity();
