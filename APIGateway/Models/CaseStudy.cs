@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using APIGateway.Models.Exceptions;
+using Microsoft.Ajax.Utilities;
 
 namespace APIGateway.Models
 {
@@ -56,13 +58,28 @@ namespace APIGateway.Models
             var shops =  await AllSellers(item);
             var tasks = shops.Select(async shop => (shop, await shop.GetItemWithQuantity(item)));
             var awaitedTasks = (await Task.WhenAll(tasks)).ToList();
-            return await  sort(awaitedTasks, currency);
+            return await sort(awaitedTasks, currency);
         }
 
         public async Task<List<ShopAgent>> AllSellers(Item item) =>
             (await Task.WhenAll(
                 (await AllShops())
-                .Select(async shop => (shop, items: await shop.GetItemsWithQuantity()))))
+                .Select(async shop =>
+                {
+                    var items =  (shop, items: await shop.GetItemsWithQuantity());
+                    items.items
+                        .Select(i => i.product.Price)
+                        .ForEach(i =>
+                        {
+                            if (i < 0)
+                            {
+                                throw new PriceNegativeException("Price was negative with " + i);
+                            } 
+                        }
+                       );
+                    
+                    return items;
+                })))
             .Where(swp => swp.items
                 .Select(p => p.product.Type)
                 .Contains(item))

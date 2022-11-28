@@ -143,6 +143,7 @@
         <Compile Include="Models\Auxilliary.cs" />
         <Compile Include="Models\CaseStudy.cs" />
         <Compile Include="Models\Exceptions\NoSuchAgentException.cs" />
+        <Compile Include="Models\Exceptions\PriceNegativeException.cs" />
         <Compile Include="Models\Exceptions\ProductNotAvailableException.cs" />
         <Compile Include="Models\Hub\AgentHub.cs" />
         <Compile Include="Models\Hub\PrefilledAgentHub.cs" />
