@@ -53,19 +53,10 @@ namespace APIGateway.Models
 
         public async Task<List<ShopAgent>> CheapestSellers(Item item, Currency currency)
         {
-            return (await AllSellers(item))
-                .Select(async shop => (shop, item: await shop.GetItemWithQuantity(item)))
-                .OrderBy(async swi =>
-                {
-                    var (_, valueTuple) = await swi;
-                    var product = valueTuple.Item1;
-                    return product.Currency == currency
-                        ? product.Price
-                        : await CheapestConvert(product.Price, currency, product.Currency);
-                })
-                .Select(async s => (await s).shop)
-                .Select(s => s.Result)
-                .ToList();
+            var shops =  await AllSellers(item);
+            var tasks = shops.Select(async shop => (shop, await shop.GetItemWithQuantity(item)));
+            var awaitedTasks = (await Task.WhenAll(tasks)).ToList();
+            return await  sort(awaitedTasks, currency);
         }
 
         public async Task<List<ShopAgent>> AllSellers(Item item) =>
@@ -151,6 +142,48 @@ namespace APIGateway.Models
             var items = (Item[]) Enum.GetValues(typeof(Item));
             var set = await shopAgent.GetItemsWithQuantity();
             return set.ToList();
-    }
+        }
+
+        private async Task<List<ShopAgent>> sort(List<(ShopAgent shopAgent, (Product product, int quantity) productWithQuantity)> shops, Currency currency)
+        {
+            var conversionTasks = new Dictionary<ShopAgent, Task<double>>();
+            var convertedTasks = new Dictionary<ShopAgent, double>();
+            var sorted = new List<(ShopAgent agent, double price)>();
+            
+            foreach (var shop in shops)
+            {
+                conversionTasks.Add(
+                    shop.shopAgent, 
+                    CheapestConvert(shop.productWithQuantity.product.Price, currency, shop.productWithQuantity.product.Currency));
+            }
+            foreach (var task in conversionTasks)
+            {
+                convertedTasks.Add(task.Key, await task.Value);
+            }
+            
+            foreach (var shop in shops)
+            {
+                var (agent, price) = (
+                    shop.shopAgent, 
+                    shop.productWithQuantity.product.Currency == currency
+                        ? shop.productWithQuantity.product.Price
+                        : convertedTasks[shop.shopAgent]
+                );
+                if (sorted.Count == 0)
+                {
+                    sorted.Insert(0, (agent, price));
+                    continue;
+                }
+                for (int i = 0; i < sorted.Count; i++)
+                {
+                    if (price < sorted[i].price)
+                    {
+                        sorted.Insert(i, (agent, price));
+                        break;
+                    }
+                }
+            }
+            return sorted.Select(s => s.Item1).ToList();
+        }
     }
 }
